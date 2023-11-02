@@ -10,6 +10,6 @@ namespace NoixMagicroquanteWebsite.Models
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Champ requis !")]
-        public decimal Rate { get; set; }
+        public float Rate { get; set; }
     }
 }
