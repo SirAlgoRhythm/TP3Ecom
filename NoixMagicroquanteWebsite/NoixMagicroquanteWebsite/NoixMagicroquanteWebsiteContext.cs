@@ -15,7 +15,6 @@ namespace NoixMagicroquanteWebsite
         public DbSet<Tax> Tax { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-
             string connection_string = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=True";
             string data_base_name = "NoixMagicroquanteWebsiteDb";
 

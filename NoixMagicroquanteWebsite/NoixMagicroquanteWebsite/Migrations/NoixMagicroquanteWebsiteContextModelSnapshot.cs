@@ -33,6 +33,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                     b.Property<bool>("Actif")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("SellDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 

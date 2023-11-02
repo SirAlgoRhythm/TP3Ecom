@@ -7,6 +7,7 @@
         public User? User { get; set; }
         public double TotalPrice { get; set; }
         public bool Actif { get; set; }
+        public DateTime? SellDate { get; set; }
         public ICollection<BasketProduct>? BasketProduct { get; set; }
     }
 }

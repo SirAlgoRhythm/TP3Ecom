@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -115,7 +116,8 @@ namespace NoixMagicroquanteWebsite.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Actif = table.Column<bool>(type: "bit", nullable: false)
+                    Actif = table.Column<bool>(type: "bit", nullable: false),
+                    SellDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

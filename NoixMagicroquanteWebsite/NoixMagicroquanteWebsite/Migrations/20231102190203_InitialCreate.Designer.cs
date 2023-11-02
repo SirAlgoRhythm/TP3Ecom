@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231102180224_InitialCreate")]
+    [Migration("20231102190203_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     b.Property<bool>("Actif")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("SellDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
