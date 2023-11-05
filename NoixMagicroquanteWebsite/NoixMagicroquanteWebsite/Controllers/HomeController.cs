@@ -6,7 +6,7 @@ namespace NoixMagicroquanteWebsite.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Title = "Noix Magicroquante - Accueil";
+            ViewBag.Title = "Noix MagiCroquantes - Accueil";
             return View();
         }
     }
