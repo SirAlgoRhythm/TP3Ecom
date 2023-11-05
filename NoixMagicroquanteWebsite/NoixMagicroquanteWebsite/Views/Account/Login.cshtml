@@ -2,4 +2,25 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
 }
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card w-50">
+        <form asp-action="Login" method="post">
+            <div class="card-body">
+                <h4 class="card-title text-center">Connexion</h4>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" value="" placeholder="Entrez votre courriel" />
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" value="" placeholder="Entrez votre mot de passe" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Connexion" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
