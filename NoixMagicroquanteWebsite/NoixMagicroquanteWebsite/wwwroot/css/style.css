@@ -19,3 +19,9 @@ a {
 a:hover {
     font-size: 20px; /* Taille du texte au survol */
 }
+
+img.logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}

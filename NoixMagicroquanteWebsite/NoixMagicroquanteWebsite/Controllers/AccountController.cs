@@ -8,5 +8,11 @@ namespace NoixMagicroquanteWebsite.Controllers
         {
             return View();
         }
+
+        public IActionResult Login()
+        {
+            ViewBag.Title = "Login";
+            return View();
+        }
     }
 }
