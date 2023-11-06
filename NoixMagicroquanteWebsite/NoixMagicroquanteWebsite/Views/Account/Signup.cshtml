@@ -13,26 +13,27 @@
 <div class="row justify-content-center align-items-center" style="min-height: 90vh;">
     <div class="col-4">
         <div class="card shadow">
-            <form asp-action="Signup">
+            <form asp-action="Signup" method="post">
+                <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
                 <div class="card-body d-flex flex-column">
                     <h4 class="card-title text-center">Création d'un compte</h4>
                     <div class="form-group">
-                        <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Entrez votre prénom" required />
+                        <input type="text" id="FirstName" asp-for="FirstName" class="form-control" placeholder="Entrez votre prénom" required />
                     </div>
                     <div class="form-group">
-                        <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Entrez votre nom" required />
+                        <input type="text" id="LastName" asp-for="LastName" class="form-control" placeholder="Entrez votre nom" required />
                     </div>
                     <div class="form-group">
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Entrez votre nom d'utilisateur" required />
+                        <input type="text" id="UserName" asp-for="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" required />
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Entrez votre courriel" required />
+                        <input type="email" id="Email" asp-for="Email" class="form-control" placeholder="Entrez votre courriel" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Entrez votre mot de passe" required />
+                        <input type="password" id="Password" asp-for="Password" class="form-control" placeholder="Entrez votre mot de passe" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirmer votre mot de passe" required />
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" required />
                     </div>
                     <div class="form-group text-center mt-auto mb-0">
                         <input type="submit" value="Confirmer" class="btn btn-primary" />

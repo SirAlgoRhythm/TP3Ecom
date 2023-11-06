@@ -25,10 +25,12 @@ namespace NoixMagicroquanteWebsite.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Signup(User user)
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine(user);
                 if (db.User.FirstOrDefault(u => u.Email == user.Email) == null)
                 {
                     db.User.Add(user);
