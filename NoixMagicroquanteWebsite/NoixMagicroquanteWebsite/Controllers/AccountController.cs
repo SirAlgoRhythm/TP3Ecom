@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using NoixMagicroquanteWebsite.Models;
 
 namespace NoixMagicroquanteWebsite.Controllers
@@ -26,12 +27,17 @@ namespace NoixMagicroquanteWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Signup(User user)
+        public IActionResult Signup(User user, string ConfirmPassword)
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine(user);
-                if (db.User.FirstOrDefault(u => u.Email == user.Email) == null)
+                if (user.Password != ConfirmPassword)
+                {
+                    TempData["Message"] = "La création de votre compte a échouée";
+                    ModelState.AddModelError("ConfirmPassword", "Le mot de passe et la confirmation ne correspondent pas.");
+                    return View(user);
+                }
+                else if (db.User.FirstOrDefault(u => u.Email == user.Email) == null)
                 {
                     db.User.Add(user);
                     db.SaveChanges();
@@ -41,13 +47,24 @@ namespace NoixMagicroquanteWebsite.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = "La création de votre compte à échouée";
+                    TempData["Message"] = "La création de votre compte a échouée";
                     return View(user);
                 }
             }
             else
             {
-                TempData["Message"] = "La création de votre compte à échouée";
+                TempData["Message"] = "La création de votre compte a échouée";
+                if (ConfirmPassword.IsNullOrEmpty())
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Champ requis !");
+                    return View(user);
+                }
+                else if (user.Password != ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Le mot de passe et la confirmation ne correspondent pas.");
+                    return View(user);
+                }
+
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
                     // Afficher l'erreur dans la console
