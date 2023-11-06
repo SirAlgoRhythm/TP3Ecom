@@ -804,8 +804,16 @@ namespace NoixMagicroquanteWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -824,7 +832,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                         {
                             UserId = 1,
                             Email = "admin@noixmagiques.com",
+                            FirstName = "",
                             IsAdmin = true,
+                            LastName = "",
                             Password = "admin",
                             UserName = "admin"
                         });

@@ -59,6 +59,8 @@ namespace NoixMagicroquanteWebsite.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -196,8 +198,8 @@ namespace NoixMagicroquanteWebsite.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "UserId", "Email", "IsAdmin", "Password", "UserName" },
-                values: new object[] { 1, "admin@noixmagiques.com", true, "admin", "admin" });
+                columns: new[] { "UserId", "Email", "FirstName", "IsAdmin", "LastName", "Password", "UserName" },
+                values: new object[] { 1, "admin@noixmagiques.com", "", true, "", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "Product",
