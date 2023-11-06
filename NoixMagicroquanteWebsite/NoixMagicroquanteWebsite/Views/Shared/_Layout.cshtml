@@ -13,21 +13,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light align-items-center">
-        <a class="navbar-brand navtextcolor" href="~/home/index"><img class="logo" src="~/images/Logo.png" alt="logo.png"></a>
-        <div class="navbar-nav">
-            <a class="nav-item nav-link navtextcolor" href="~/home/index">Accueil</a>
-            <a class="nav-item nav-link navtextcolor" href="~/product/index">Produits</a>
-            <!--page des factures du client (seulement quand il est connecté)-->
-            <a class="nav-item nav-link navtextcolor" href="~/home/contact">Contact</a>
-        </div>
-        <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link navtextcolor" href="~/panier/index">Panier</a>
-            <a class="nav-item nav-link navtextcolor" href="~/account/login">Connexion</a>
-            <a class="nav-item nav-link navtextcolor" href="~/account/logout">Déconnexion</a>
-        </div>
-    </nav>
-    <div class="container-fluid p-5 w-100">
+    <div class="position-absolute w-100">
+        <nav class="navbar navbar-expand-lg navbar-light align-items-center">
+            <a class="navbar-brand navtextcolor animate-hover" href="~/home/index"><img class="logo" src="~/images/Logo.png" alt="logo.png"></a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/home/index">Accueil</a>
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/product/index">Produits</a>
+                <!--page des factures du client (seulement quand il est connecté)-->
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/home/contact">Contact</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/panier/index">Panier</a>
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/login">Connexion</a>
+                <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/logout">Déconnexion</a>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
         @RenderBody()
     </div>
 </body>

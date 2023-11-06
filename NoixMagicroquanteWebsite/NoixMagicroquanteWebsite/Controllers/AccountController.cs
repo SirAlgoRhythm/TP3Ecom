@@ -6,12 +6,19 @@ namespace NoixMagicroquanteWebsite.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Title = "Account";
             return View();
         }
 
         public IActionResult Login()
         {
             ViewBag.Title = "Login";
+            return View();
+        }
+
+        public IActionResult Signup()
+        {
+            ViewBag.Title = "Sign up";
             return View();
         }
     }
