@@ -6,19 +6,19 @@ namespace NoixMagicroquanteWebsite.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Title = "Account";
+            ViewBag.Title = "Noix MagiCroquantes - Compte";
             return View();
         }
 
         public IActionResult Login()
         {
-            ViewBag.Title = "Login";
+            ViewBag.Title = "Noix MagiCroquantes - Connexion";
             return View();
         }
 
         public IActionResult Signup()
         {
-            ViewBag.Title = "Sign up";
+            ViewBag.Title = "Noix MagiCroquantes - Créer un compte";
             return View();
         }
     }
