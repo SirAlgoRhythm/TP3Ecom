@@ -5,11 +5,15 @@
     Layout = "_Layout";
     ViewBag.Title = ViewBag.Title;
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning text-center">@TempData["Message"]</div>
+}
 
 <div class="row justify-content-center align-items-center" style="min-height: 90vh;">
     <div class="col-4">
         <div class="card shadow">
-            <form asp-action="Login">
+            <form asp-action="Signup">
                 <div class="card-body d-flex flex-column">
                     <h4 class="card-title text-center">Création d'un compte</h4>
                     <div class="form-group">
