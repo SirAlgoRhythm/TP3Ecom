@@ -1,0 +1,28 @@
+﻿body {
+    background-color: #FAF0E6 !important;
+}
+
+nav {
+    background-color: #303E4D;
+    height: 70px;
+}
+
+.navtextcolor {
+    color: #B8975A !important;
+    font-size: 18px; /* Taille initiale du texte */
+    transition: font-size 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Animation de la transition de la taille de la police */
+}
+
+.animate-hover:hover {
+    font-size: 20px; /* Taille du texte au survol */
+}
+
+img.logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.active-link {
+    font-weight: bold;
+}
