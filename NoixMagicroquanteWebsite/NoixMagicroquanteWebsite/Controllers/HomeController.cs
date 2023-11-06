@@ -9,5 +9,11 @@ namespace NoixMagicroquanteWebsite.Controllers
             ViewBag.Title = "Noix MagiCroquantes - Accueil";
             return View();
         }
+
+        public IActionResult Contact()
+        {
+            ViewBag.Title = "Noix MagiCroquantes - Contact";
+            return View();
+        }
     }
 }
