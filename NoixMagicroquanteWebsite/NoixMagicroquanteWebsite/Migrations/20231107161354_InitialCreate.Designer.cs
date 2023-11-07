@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231106155906_InitialCreate")]
+    [Migration("20231107161354_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -838,7 +838,7 @@ namespace NoixMagicroquanteWebsite.Migrations
                             FirstName = "",
                             IsAdmin = true,
                             LastName = "",
-                            Password = "admin",
+                            Password = "AQAAAAEAACcQAAAAEMp9WOSDaQTrSl/6lnFZetyHh82hOdrWzD5OZXNEmMKGC8rAs8umm2v41EIGQUnWxg==",
                             UserName = "admin"
                         });
                 });

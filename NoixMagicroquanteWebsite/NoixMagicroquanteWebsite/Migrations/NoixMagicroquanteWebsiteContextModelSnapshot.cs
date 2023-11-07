@@ -835,7 +835,7 @@ namespace NoixMagicroquanteWebsite.Migrations
                             FirstName = "",
                             IsAdmin = true,
                             LastName = "",
-                            Password = "admin",
+                            Password = "AQAAAAEAACcQAAAAEMp9WOSDaQTrSl/6lnFZetyHh82hOdrWzD5OZXNEmMKGC8rAs8umm2v41EIGQUnWxg==",
                             UserName = "admin"
                         });
                 });

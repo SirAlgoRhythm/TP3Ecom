@@ -199,7 +199,7 @@ namespace NoixMagicroquanteWebsite.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "IsAdmin", "LastName", "Password", "UserName" },
-                values: new object[] { 1, "admin@noixmagiques.com", "", true, "", "admin", "admin" });
+                values: new object[] { 1, "admin@noixmagiques.com", "", true, "", "AQAAAAEAACcQAAAAEMp9WOSDaQTrSl/6lnFZetyHh82hOdrWzD5OZXNEmMKGC8rAs8umm2v41EIGQUnWxg==", "admin" });
 
             migrationBuilder.InsertData(
                 table: "Product",

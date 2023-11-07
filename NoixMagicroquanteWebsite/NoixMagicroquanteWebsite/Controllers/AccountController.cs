@@ -4,9 +4,15 @@ using NoixMagicroquanteWebsite.Models;
 
 namespace NoixMagicroquanteWebsite.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        protected NoixMagicroquanteWebsiteContext db = new NoixMagicroquanteWebsiteContext();
+        private readonly UserManager _userManager;
+
+        public AccountController(NoixMagicroquanteWebsiteContext context) : base(context) 
+        {
+            _userManager = new UserManager();
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";
@@ -39,6 +45,9 @@ namespace NoixMagicroquanteWebsite.Controllers
                 }
                 else if (db.User.FirstOrDefault(u => u.Email == user.Email) == null)
                 {
+                    string hashedPassword = _userManager.HashPassword(user, user.Password + _userManager.Salt);
+                    user.Password = hashedPassword;
+
                     db.User.Add(user);
                     db.SaveChanges();
 

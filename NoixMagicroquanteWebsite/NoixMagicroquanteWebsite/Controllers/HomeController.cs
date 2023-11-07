@@ -2,8 +2,10 @@
 
 namespace NoixMagicroquanteWebsite.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(NoixMagicroquanteWebsiteContext context) : base(context) { }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Accueil";

@@ -1,11 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using NoixMagicroquanteWebsite.Models;
 
 namespace NoixMagicroquanteWebsite
 {
     public class NoixMagicroquanteWebsiteContext : DbContext
     {
+        public NoixMagicroquanteWebsiteContext(DbContextOptions<NoixMagicroquanteWebsiteContext> options)
+        : base(options)
+        {
+        }
+
         public DbSet<User> User { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Basket> Basket { get; set; }
@@ -13,6 +17,7 @@ namespace NoixMagicroquanteWebsite
         public DbSet<Category> Category { get; set; }
         public DbSet<Unit> Unit { get; set; }
         public DbSet<Tax> Tax { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
             string connection_string = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=True";
@@ -24,7 +29,7 @@ namespace NoixMagicroquanteWebsite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, FirstName = "", LastName = "", UserName = "admin", Email = "admin@noixmagiques.com", Password = "admin", IsAdmin = true }
+                new User { UserId = 1, FirstName = "", LastName = "", UserName = "admin", Email = "admin@noixmagiques.com", Password = "AQAAAAEAACcQAAAAEMp9WOSDaQTrSl/6lnFZetyHh82hOdrWzD5OZXNEmMKGC8rAs8umm2v41EIGQUnWxg==", IsAdmin = true }
             );
 
             modelBuilder.Entity<Tax>().HasData(

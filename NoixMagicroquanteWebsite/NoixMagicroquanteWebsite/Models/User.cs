@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Data;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace NoixMagicroquanteWebsite.Models
 {
