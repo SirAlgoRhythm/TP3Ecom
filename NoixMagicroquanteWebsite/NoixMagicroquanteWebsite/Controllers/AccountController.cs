@@ -51,6 +51,21 @@ namespace NoixMagicroquanteWebsite.Controllers
                     db.User.Add(user);
                     db.SaveChanges();
 
+                    int IsAdmin;
+                    switch (user.IsAdmin)
+                    {
+                        case true:
+                            IsAdmin = 1;
+                            break;
+                        default:
+                            IsAdmin = 0;
+                            break;
+                    }
+
+                    // Stockage de l'ID de l'utilisateur connecté dans la session
+                    HttpContext.Session.SetInt32("UserId", user.UserId);
+                    HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+
                     TempData["Message"] = "Votre compte a été créé avec succès !";
                     return RedirectToAction("Index", "Home");
                 }
