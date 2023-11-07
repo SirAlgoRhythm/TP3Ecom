@@ -5,17 +5,25 @@ namespace NoixMagicroquanteWebsite.Models
     public class UserManager
     {
         private readonly PasswordHasher<User> _passwordHasher;
-        private readonly string _salt;
 
         public UserManager()
         {
             _passwordHasher = new PasswordHasher<User>();
-            _salt = "NoixMagicroquanteWebsite";
         }
 
-        public string Salt
+        public int IsAdmin(User user)
         {
-            get { return _salt; }
+            int IsAdmin;
+            switch (user.IsAdmin)
+            {
+                case true:
+                    IsAdmin = 1;
+                    break;
+                default:
+                    IsAdmin = 0;
+                    break;
+            }
+            return IsAdmin;
         }
 
         public string HashPassword(User user, string password)

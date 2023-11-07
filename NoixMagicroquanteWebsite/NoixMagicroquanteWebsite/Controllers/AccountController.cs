@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NoixMagicroquanteWebsite.Models;
 
@@ -13,6 +14,13 @@ namespace NoixMagicroquanteWebsite.Controllers
             _userManager = new UserManager();
         }
 
+        public bool CheckPassword(User user, string providedPassword)
+        {
+            string storedHashedPassword = user.Password; // Obtenez cela de votre base de données
+            PasswordVerificationResult result = _userManager.VerifyPassword(user, storedHashedPassword, providedPassword);
+            return result == PasswordVerificationResult.Success;
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";
@@ -23,6 +31,48 @@ namespace NoixMagicroquanteWebsite.Controllers
         {
             ViewBag.Title = "Noix MagiCroquantes - Connexion";
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Récupération de l'utilisateur correspondant à l'adresse email
+                var utilisateur = db.User.SingleOrDefault(u => u.Email == model.Email);
+
+                if (utilisateur == null)
+                {
+                    TempData["Message"] = "Erreur, vérifiez les informations que vous avez entré.";
+                    return View(model);
+                }
+                else
+                {
+                    bool verifPassword = CheckPassword(utilisateur, model.Password);
+                    if (verifPassword)
+                    {
+                        int IsAdmin = _userManager.IsAdmin(utilisateur);
+
+                        // Stockage de l'ID de l'utilisateur connecté dans la session
+                        HttpContext.Session.SetInt32("UserId", utilisateur.UserId);
+                        HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+
+                        TempData["Message"] = "Connexion réussie, bon retour parmis nous !";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Erreur, vérifiez les informations que vous avez entré.";
+                        return View(model);
+                    }
+                }
+            }
+            else
+            {
+                TempData["Message"] = "La connexion à votre compte a échouée";
+                return View(model);
+            }
         }
 
         public IActionResult Signup()
@@ -45,22 +95,13 @@ namespace NoixMagicroquanteWebsite.Controllers
                 }
                 else if (db.User.FirstOrDefault(u => u.Email == user.Email) == null)
                 {
-                    string hashedPassword = _userManager.HashPassword(user, user.Password + _userManager.Salt);
+                    string hashedPassword = _userManager.HashPassword(user, user.Password);
                     user.Password = hashedPassword;
 
                     db.User.Add(user);
                     db.SaveChanges();
 
-                    int IsAdmin;
-                    switch (user.IsAdmin)
-                    {
-                        case true:
-                            IsAdmin = 1;
-                            break;
-                        default:
-                            IsAdmin = 0;
-                            break;
-                    }
+                    int IsAdmin = _userManager.IsAdmin(user);
 
                     // Stockage de l'ID de l'utilisateur connecté dans la session
                     HttpContext.Session.SetInt32("UserId", user.UserId);
