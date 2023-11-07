@@ -25,8 +25,15 @@
             </div>
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Panier" ? "active-link" : "")" href="~/panier/index"><i class="fa-solid fa-basket-shopping"></i> Panier</a>
-                <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Connexion" ? "active-link" : "")" href="~/account/login"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
-                <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/logout"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+                @if (ViewBag.UserId == null)
+                {
+                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Connexion" ? "active-link" : "")" href="~/account/login"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
+                }
+                else
+                {
+                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Mon Compte" ? "active-link" : "")" href="~/account/index"><i class="fa-solid fa-user"></i> Mon Compte</a>
+                    <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/logout"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+                }
             </div>
         </nav>
     </div>

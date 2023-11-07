@@ -97,5 +97,13 @@ namespace NoixMagicroquanteWebsite.Controllers
             }
             return View(user);
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            TempData["Message"] = "Déconnexion réussie, à bientôt !";
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
