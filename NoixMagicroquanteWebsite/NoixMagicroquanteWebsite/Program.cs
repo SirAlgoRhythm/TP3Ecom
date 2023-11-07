@@ -1,10 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddMvc(option => option.EnableEndpointRouting = false);
+namespace NoixMagicroquanteWebsite
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-var app = builder.Build();
-
-app.UseMvc(route => route.MapRoute("Default", "{controller=Home}/{action=Index}"));
-
-app.UseFileServer();
-
-app.Run();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+}
