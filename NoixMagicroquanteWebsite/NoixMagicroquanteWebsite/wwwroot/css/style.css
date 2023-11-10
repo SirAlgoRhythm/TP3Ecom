@@ -26,3 +26,7 @@ img.logo {
 .active-link {
     font-weight: bold;
 }
+
+.input-group-text {
+    cursor: pointer; /* Change le curseur lors du survol de l'icône */
+}
