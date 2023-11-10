@@ -6,19 +6,19 @@ namespace NoixMagicroquanteWebsite.Models
     {
         public int ProductId { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un nom est requis !")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un prix d'achat est requis !")]
         public double PurchasePrice { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un prix de vente est requis !")]
         public double SellingPrice { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Une quantité de produit en stock est requise !")]
         public int Stock { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Une image est requise !")]
         public string? Image { get; set; }
         public bool Edible { get; set; }
         public int UnitId { get; set; }

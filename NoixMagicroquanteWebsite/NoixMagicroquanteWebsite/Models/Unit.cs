@@ -6,7 +6,7 @@ namespace NoixMagicroquanteWebsite.Models
     {
         public int UnitId { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un nom est requis !")]
         public string? Name { get; set; }
     }
 }

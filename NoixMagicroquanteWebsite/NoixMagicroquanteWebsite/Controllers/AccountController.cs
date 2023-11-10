@@ -121,7 +121,7 @@ namespace NoixMagicroquanteWebsite.Controllers
                 TempData["Message"] = "La création de votre compte a échouée";
                 if (ConfirmPassword.IsNullOrEmpty())
                 {
-                    ModelState.AddModelError("ConfirmPassword", "Champ requis !");
+                    ModelState.AddModelError("ConfirmPassword", "Un mot de passe est requis !");
                     return View(user);
                 }
                 else if (user.Password != ConfirmPassword)

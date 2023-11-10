@@ -6,10 +6,10 @@ namespace NoixMagicroquanteWebsite.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un nom est requis !")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "Champ requis !")]
+        [Required(ErrorMessage = "Un taux est requis !")]
         public float Rate { get; set; }
     }
 }
