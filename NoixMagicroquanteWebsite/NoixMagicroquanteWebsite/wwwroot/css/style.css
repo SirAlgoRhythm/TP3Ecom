@@ -23,10 +23,34 @@ img.logo {
     border-radius: 50%;
 }
 
+.card-background {
+    background-color: #39485A !important;
+}
+
+.textcolor {
+    color: #B8975A !important;
+}
+
+.card-text {
+    color: #B8975A !important;
+}
+
+.field-background {
+    background-color: #FAF0E6 !important;
+}
+
 .active-link {
     font-weight: bold;
 }
 
 .input-group-text {
     cursor: pointer; /* Change le curseur lors du survol de l'icône */
+}
+
+.user-info {
+    background-color: #f8f9fa;
+    border-left: 4px solid #B8975A;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
 }

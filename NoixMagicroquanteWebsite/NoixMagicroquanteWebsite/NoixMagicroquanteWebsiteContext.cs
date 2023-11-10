@@ -29,7 +29,7 @@ namespace NoixMagicroquanteWebsite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, FirstName = "", LastName = "", UserName = "admin", Email = "admin@noixmagiques.com", Password = "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==", IsAdmin = true }
+                new User { UserId = 1, FirstName = "admin", LastName = "admin", UserName = "admin", Email = "admin@noixmagiques.com", Password = "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==", IsAdmin = true }
             );
 
             modelBuilder.Entity<Tax>().HasData(

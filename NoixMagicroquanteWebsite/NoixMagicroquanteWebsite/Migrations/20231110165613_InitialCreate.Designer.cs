@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231107174800_InitialCreate")]
+    [Migration("20231110165613_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -835,9 +835,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                         {
                             UserId = 1,
                             Email = "admin@noixmagiques.com",
-                            FirstName = "",
+                            FirstName = "admin",
                             IsAdmin = true,
-                            LastName = "",
+                            LastName = "admin",
                             Password = "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==",
                             UserName = "admin"
                         });

@@ -832,9 +832,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                         {
                             UserId = 1,
                             Email = "admin@noixmagiques.com",
-                            FirstName = "",
+                            FirstName = "admin",
                             IsAdmin = true,
-                            LastName = "",
+                            LastName = "admin",
                             Password = "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==",
                             UserName = "admin"
                         });
