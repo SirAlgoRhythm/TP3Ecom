@@ -89,12 +89,6 @@ namespace NoixMagicroquanteWebsite.Controllers
                 }
                 else
                 {
-                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                    {
-                        // Afficher l'erreur dans la console
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-
                     return RedirectToAction("Index", "Account");
                 }
             }
@@ -202,14 +196,11 @@ namespace NoixMagicroquanteWebsite.Controllers
                     ModelState.AddModelError("ConfirmPassword", "Le mot de passe et la confirmation ne correspondent pas.");
                     return View(user);
                 }
-
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                else
                 {
-                    // Afficher l'erreur dans la console
-                    Console.WriteLine(error.ErrorMessage);
+                    return View(user);
                 }
             }
-            return View(user);
         }
 
         public IActionResult Logout()

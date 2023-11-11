@@ -7,6 +7,14 @@ nav {
     height: 70px;
 }
 
+.height-element {
+    min-height: 90vh;
+}
+
+.card-width {
+    width: 30%;
+}
+
 .navtextcolor {
     color: #B8975A !important;
     font-size: 18px; /* Taille initiale du texte */
@@ -64,6 +72,100 @@ img.logo {
 
 /* Style lorsque la section est visible */
 #hiddenFields.active {
-    max-height: 500px; /* Assurez-vous que cette valeur est suffisamment grande pour contenir tout le contenu */
+    max-height: 500px;
     transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+}
+
+/* Pour les écrans moyens et petits (tablettes et téléphones) */
+@media (max-width: 2000px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: 90vh;
+    }
+
+    .card-width {
+        width: 40%;
+    }
+}
+
+/* Pour les écrans moyens et petits (tablettes et téléphones) */
+@media (max-width: 1500px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: 90vh;
+    }
+
+    .card-width {
+        width: 60%;
+    }
+}
+
+/* Pour les écrans moyens et petits (tablettes et téléphones) */
+@media (max-width: 1000px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: 90vh;
+    }
+
+    .card-width {
+        width: 80%;
+    }
+
+    nav {
+        height: auto; /* Hauteur auto pour permettre plus de flexibilité sur les petits écrans */
+    }
+}
+
+/* Pour les très petits écrans (téléphones) */
+@media (max-width: 576px) {
+    .navtextcolor, .animate-hover {
+        font-size: 14px; /* Encore plus petit pour les téléphones */
+    }
+
+    .card-background {
+        margin: 0.5rem; /* Marges plus petites pour les écrans étroits */
+        width: auto; /* Permettre à la carte de s'étendre et de se contracter */
+    }
+
+    #hiddenFields.active {
+        max-height: 300px; /* Une hauteur maximale plus petite pour les petits écrans */
+    }
+
+    nav {
+        height: auto; /* Hauteur auto pour permettre plus de flexibilité sur les petits écrans */
+    }
+
+    .user-info {
+        padding: 0.25rem; /* Padding plus petit pour les informations utilisateur */
+        margin-bottom: 0.5rem; /* Moins d'espace entre les éléments */
+    }
+
+    .height-element {
+        min-height: 90vh;
+    }
+
+    .card-width {
+        width: 80%;
+    }
 }

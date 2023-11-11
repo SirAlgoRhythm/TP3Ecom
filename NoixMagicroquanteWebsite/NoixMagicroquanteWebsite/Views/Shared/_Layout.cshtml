@@ -18,29 +18,50 @@
 <body>
     <div class="w-100">
         <nav class="navbar sticky-top navbar-expand-lg navbar-light align-items-center">
+            <!-- Bouton hamburger pour les petits écrans, placé à gauche du logo -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <a class="navbar-brand" href="~/home/index"><img class="logo" src="~/images/Logo.png" alt="logo.png"></a>
-            <div class="navbar-nav">
-                <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Accueil" ? "active-link" : "")" href="~/home/index"><i class="fa-solid fa-house-chimney"></i> Accueil</a>
-                <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Produits" ? "active-link" : "")" href="~/product/index"><i class="fa-solid fa-box-open"></i> Produits</a>
-                <!--page des factures du client (seulement quand il est connecté)-->
-                <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Contact" ? "active-link" : "")" href="~/home/contact"><i class="fa-solid fa-address-book"></i> Contact</a>
-            </div>
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Panier" ? "active-link" : "")" href="~/panier/index"><i class="fa-solid fa-basket-shopping"></i> Panier</a>
-                @if (ViewBag.UserId == null)
-                {
-                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Connexion" ? "active-link" : "")" href="~/account/login"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
-                }
-                else
-                {
-                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Mon Compte" ? "active-link" : "")" href="~/account/index"><i class="fa-solid fa-user"></i> Mon Compte</a>
-                    <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/logout"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
-                }
+
+            <!-- Contenu de la barre de navigation -->
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <!-- Elements à gauche -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Accueil" ? "active-link" : "")" href="~/home/index"><i class="fa-solid fa-house-chimney"></i> Accueil</a>
+                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Produits" ? "active-link" : "")" href="~/product/index"><i class="fa-solid fa-box-open"></i> Produits</a>
+                    <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Contact" ? "active-link" : "")" href="~/home/contact"><i class="fa-solid fa-address-book"></i> Contact</a>
+                </div>
+                <!-- Elements à droite -->
+                <div class="navbar-nav ml-auto">
+                    @if (ViewBag.UserId == null)
+                    {
+                        <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Panier" ? "active-link" : "")" href="~/basket/index"><i class="fa-solid fa-basket-shopping"></i> Panier</a>
+                        <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Connexion" ? "active-link" : "")" href="~/account/login"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
+                    }
+                    else
+                    {
+                        if (ViewBag.IsAdmin == 1)
+                        {
+                            <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Facture" ? "active-link" : "")" href="~/facture/index"><i class="fa-solid fa-file-invoice-dollar"></i> Facture</a>
+                            <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Utilisateur" ? "active-link" : "")" href="~/user/index"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                        }
+                        else
+                        {
+                            <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Panier" ? "active-link" : "")" href="~/basket/index"><i class="fa-solid fa-basket-shopping"></i> Panier</a>
+                        }
+                        <a class="nav-item nav-link navtextcolor animate-hover @(ViewBag.Title == "Noix MagiCroquantes - Compte" ? "active-link" : "")" href="~/account/index"><i class="fa-solid fa-user"></i> Mon Compte</a>
+                        <a class="nav-item nav-link navtextcolor animate-hover" href="~/account/logout"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+                    }
+                </div>
             </div>
         </nav>
     </div>
     <div class="container-fluid">
         @RenderBody()
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjy8FjqXK3s4n5abW8FxzegQnx+wLb0tvzCU3aO1L31fA/7qnM+bL2" crossorigin="anonymous"></script>
 </body>
 </html>
