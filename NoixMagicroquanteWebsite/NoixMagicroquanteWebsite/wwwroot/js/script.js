@@ -14,24 +14,38 @@
 }
 
 function toggleAccountEdit() {
-    // Empêche le formulaire de se soumettre
-    event.preventDefault();
+    event.preventDefault(); // Empêche le formulaire de se soumettre
 
-    // Basculer la visibilité des champs cachés
     var hiddenFields = document.getElementById('hiddenFields');
-    hiddenFields.style.display = hiddenFields.style.display === 'none' ? '' : 'none';
 
-    // Basculer l'attribut disabled
-    document.getElementById('FirstName').disabled = !document.getElementById('FirstName').disabled;
-    document.getElementById('LastName').disabled = !document.getElementById('LastName').disabled;
-    document.getElementById('UserName').disabled = !document.getElementById('UserName').disabled;
-    document.getElementById('Email').disabled = !document.getElementById('Email').disabled;
+    // Basculer la classe 'active' pour contrôler l'affichage
+    if (hiddenFields.classList.contains('active')) {
+        hiddenFields.classList.remove('active');
+    } else {
+        hiddenFields.classList.add('active');
+    }
+
+    // Basculer l'attribut disabled des champs si nécessaire
+    var fieldsToToggle = ['FirstName', 'LastName', 'UserName', 'Email'];
+    fieldsToToggle.forEach(function (fieldId) {
+        var field = document.getElementById(fieldId);
+        if (field) {
+            field.disabled = !field.disabled;
+        }
+    });
 
     // Vous pouvez également basculer le texte du bouton Éditer si nécessaire
     var editButton = document.getElementById('btnEdit');
-    if (hiddenFields.style.display === 'none') {
-        editButton.style.display = '';
-    } else {
+    var saveButton = document.getElementById('btnSave');
+    var cancelButton = document.getElementById('btnCancel');
+
+    if (hiddenFields.classList.contains('active')) {
         editButton.style.display = 'none';
+        saveButton.style.display = 'inline-block';
+        cancelButton.style.display = 'inline-block';
+    } else {
+        editButton.style.display = 'inline-block';
+        saveButton.style.display = 'none';
+        cancelButton.style.display = 'none';
     }
 }

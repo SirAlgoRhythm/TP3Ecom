@@ -54,3 +54,16 @@ img.logo {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
 }
+
+/* Style initial pour la section cachée */
+#hiddenFields {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-out; /* Animation sur 0.5 secondes */
+}
+
+/* Style lorsque la section est visible */
+#hiddenFields.active {
+    max-height: 500px; /* Assurez-vous que cette valeur est suffisamment grande pour contenir tout le contenu */
+    transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+}
