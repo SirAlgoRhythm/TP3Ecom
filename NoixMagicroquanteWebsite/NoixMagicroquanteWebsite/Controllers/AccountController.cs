@@ -111,7 +111,7 @@ namespace NoixMagicroquanteWebsite.Controllers
 
                 if (utilisateur == null)
                 {
-                    TempData["Message"] = "Erreur, vérifiez les informations que vous avez entré.";
+                    TempData["Error"] = "Erreur, vérifiez les informations que vous avez entré.";
                     return View(model);
                 }
                 else
@@ -130,14 +130,14 @@ namespace NoixMagicroquanteWebsite.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Erreur, vérifiez les informations que vous avez entré.";
+                        TempData["Error"] = "Erreur, vérifiez les informations que vous avez entré.";
                         return View(model);
                     }
                 }
             }
             else
             {
-                TempData["Message"] = "La connexion à votre compte a échoué";
+                TempData["Error"] = "La connexion à votre compte a échoué";
                 return View(model);
             }
         }
@@ -156,7 +156,7 @@ namespace NoixMagicroquanteWebsite.Controllers
             {
                 if (user.Password != ConfirmPassword)
                 {
-                    TempData["Message"] = "La création de votre compte a échoué";
+                    TempData["Error"] = "La création de votre compte a échoué";
                     ModelState.AddModelError("ConfirmPassword", "Le mot de passe et la confirmation ne correspondent pas.");
                     return View(user);
                 }
@@ -179,13 +179,13 @@ namespace NoixMagicroquanteWebsite.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = "La création de votre compte a échoué";
+                    TempData["Error"] = "La création de votre compte a échoué";
                     return View(user);
                 }
             }
             else
             {
-                TempData["Message"] = "La création de votre compte a échoué";
+                TempData["Error"] = "La création de votre compte a échoué";
                 if (ConfirmPassword.IsNullOrEmpty())
                 {
                     ModelState.AddModelError("ConfirmPassword", "Un mot de passe est requis !");
