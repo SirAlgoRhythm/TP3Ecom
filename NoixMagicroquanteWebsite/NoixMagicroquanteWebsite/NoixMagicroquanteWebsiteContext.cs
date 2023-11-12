@@ -13,7 +13,7 @@ namespace NoixMagicroquanteWebsite
         public DbSet<User> User { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Basket> Basket { get; set; }
-        public DbSet<BasketProduct> ProductOrder { get; set; }
+        public DbSet<BasketProduct> BasketProduct { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Unit> Unit { get; set; }
         public DbSet<Tax> Tax { get; set; }

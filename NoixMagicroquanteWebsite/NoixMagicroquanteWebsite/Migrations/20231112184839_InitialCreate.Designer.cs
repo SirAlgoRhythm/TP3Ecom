@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231110165613_InitialCreate")]
+    [Migration("20231112184839_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -70,7 +70,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("BasketProduct");
                 });
 
             modelBuilder.Entity("NoixMagicroquanteWebsite.Models.Category", b =>

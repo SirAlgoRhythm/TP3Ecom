@@ -67,7 +67,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("BasketProduct");
                 });
 
             modelBuilder.Entity("NoixMagicroquanteWebsite.Models.Category", b =>
