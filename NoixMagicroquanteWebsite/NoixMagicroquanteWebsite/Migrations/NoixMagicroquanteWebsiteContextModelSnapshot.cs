@@ -30,7 +30,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketId"));
 
-                    b.Property<bool>("Actif")
+                    b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("SellDate")

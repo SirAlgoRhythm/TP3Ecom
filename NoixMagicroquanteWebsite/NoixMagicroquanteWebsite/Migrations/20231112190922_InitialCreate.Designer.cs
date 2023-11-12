@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231112184839_InitialCreate")]
+    [Migration("20231112190922_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketId"));
 
-                    b.Property<bool>("Actif")
+                    b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("SellDate")
