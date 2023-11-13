@@ -76,6 +76,18 @@ img.logo {
     transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
 /* Pour les écrans moyens et petits (tablettes et téléphones) */
 @media (max-width: 2000px) {
     .navtextcolor, .animate-hover {
