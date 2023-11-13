@@ -30,6 +30,8 @@ namespace NoixMagicroquanteWebsite.Controllers
                 db.Basket.Add(basket);
                 db.SaveChanges();
 
+                HttpContext.Session.SetInt32("BasketId", basket.BasketId);
+
                 var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
                 return View(ListProducts);
             }

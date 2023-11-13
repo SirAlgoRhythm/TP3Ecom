@@ -125,6 +125,12 @@ namespace NoixMagicroquanteWebsite.Controllers
                         HttpContext.Session.SetInt32("UserId", utilisateur.UserId);
                         HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
 
+                        var basket = db.Basket.FirstOrDefault(b => b.UserId == utilisateur.UserId && b.Active == true);
+                        if (basket != null)
+                        {
+                            HttpContext.Session.SetInt32("BasketId", basket.BasketId);
+                        }
+
                         TempData["Message"] = "Connexion réussie, bon retour parmis nous !";
                         return RedirectToAction("Index", "Home");
                     }
