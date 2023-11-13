@@ -9,57 +9,60 @@
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger text-center">@TempData["Error"]</div>
+    <style>
+        .margin-top {
+			margin-top: 25rem !important;
+		}
+    </style>
 }
 
-<div class="row justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="col-sm-7 col-lg-5 col-3">
-        <div class="card shadow">
-            <div class="card-background card-body d-flex flex-column">
-                <form asp-action="Signup" method="post">
-                    @Html.AntiForgeryToken()
-                    <h4 class="text-color card-title text-center">Création d'un compte</h4>
-                    <div class="field-background user-info form-group">
-                        <label asp-for="FirstName"><b>Prénom :</b></label>
-                        <input type="text" asp-for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="field-background user-info form-group">
-                        <label asp-for="LastName"><b>Nom :</b></label>
-                        <input type="text" id="LastName" asp-for="LastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    <div class="field-background user-info form-group">
-                        <label asp-for="UserName"><b>Nom d'utilisateur :</b></label>
-                        <input type="text" id="UserName" asp-for="UserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
-                    <div class="field-background user-info form-group">
-                        <label asp-for="Email"><b>Courriel :</b></label>
-                        <input type="email" id="Email" asp-for="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="field-background user-info form-group">
-                        <label asp-for="Password"><b>Mot de passe :</b></label>
-                        <input type="password" id="Password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="field-background user-info form-group">
-                        <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
-                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
-                        @if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count == 1)
-                        {
-                            <span class="text-danger">@ViewData.ModelState["ConfirmPassword"].Errors[0].ErrorMessage</span>
-                        }
-                        else if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count > 1)
-                        {
-                            <span class="text-danger">@ViewData.ModelState["ConfirmPassword"].Errors[1].ErrorMessage</span>
-						}
-                    </div>
-                    <div class="form-group text-center mt-auto mb-0">
-                        <input type="submit" value="Confirmer" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
+<div class="center">
+    <div class="card shadow card-background margin-top" style="width:40rem;">
+        <div class="card-body">
+            <form asp-action="Signup" method="post">
+                @Html.AntiForgeryToken()
+                <h4 class="text-color card-title text-center">Création d'un compte</h4>
+                <div class="field-background user-info form-group">
+                    <label asp-for="FirstName"><b>Prénom :</b></label>
+                    <input type="text" asp-for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label asp-for="LastName"><b>Nom :</b></label>
+                    <input type="text" id="LastName" asp-for="LastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label asp-for="UserName"><b>Nom d'utilisateur :</b></label>
+                    <input type="text" id="UserName" asp-for="UserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label asp-for="Email"><b>Courriel :</b></label>
+                    <input type="email" id="Email" asp-for="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label asp-for="Password"><b>Mot de passe :</b></label>
+                    <input type="password" id="Password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                    <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                    @if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count == 1)
+                    {
+                        <span class="text-danger">@ViewData.ModelState["ConfirmPassword"].Errors[0].ErrorMessage</span>
+                    }
+                    else if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count > 1)
+                    {
+                        <span class="text-danger">@ViewData.ModelState["ConfirmPassword"].Errors[1].ErrorMessage</span>
+				    }
+                </div>
+                <div class="form-group text-center mt-auto mb-0">
+                    <input type="submit" value="Confirmer" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
 </div>
