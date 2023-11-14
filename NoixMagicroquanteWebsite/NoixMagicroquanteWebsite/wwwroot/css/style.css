@@ -125,6 +125,7 @@ thead th:last-child {
     align-items: center;
     position: relative; /* Changez 'absolute' en 'relative' */
     margin-top: 80px; /* Ajoutez une marge en haut pour tenir compte de la navbar */
+    margin-bottom: 80px;
     width: 100%;
 }
 
