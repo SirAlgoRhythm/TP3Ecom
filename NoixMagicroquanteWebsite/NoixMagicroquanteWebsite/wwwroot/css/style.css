@@ -8,7 +8,7 @@ nav {
 }
 
 .height-element {
-    min-height: 90vh;
+    min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
 }
 
 .card-width {
@@ -110,12 +110,22 @@ thead th:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: absolute; /* Changez 'absolute' en 'relative' */
+    margin-top: 80px; /* Ajoutez une marge en haut pour tenir compte de la navbar */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     margin: auto;
+}
+
+.center-create-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Changez 'absolute' en 'relative' */
+    margin-top: 80px; /* Ajoutez une marge en haut pour tenir compte de la navbar */
+    width: 100%;
 }
 
 .margin-top {
@@ -139,7 +149,7 @@ thead th:last-child {
     }
 
     .height-element {
-        min-height: 90vh;
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
     }
 
     .card-width {
@@ -161,7 +171,7 @@ thead th:last-child {
     }
 
     .height-element {
-        min-height: 90vh;
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
     }
 
     .card-width {
@@ -184,7 +194,7 @@ thead th:last-child {
     }
 
     .height-element {
-        min-height: 90vh;
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
     }
 
     .card-width {
@@ -225,7 +235,7 @@ thead th:last-child {
     }
 
     .height-element {
-        min-height: 90vh;
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
     }
 
     .card-width {
