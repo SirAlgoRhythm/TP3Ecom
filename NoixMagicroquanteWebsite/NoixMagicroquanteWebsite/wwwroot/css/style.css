@@ -89,10 +89,16 @@ img.logo {
 }
 
 .margin-top {
-    margin-top: 10rem;
+    margin-top: 0rem;
 }
 
-/* Pour les écrans moyens et petits (tablettes et téléphones) */
+.center-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
 @media (max-width: 2000px) {
     .navtextcolor, .animate-hover {
         font-size: 16px; /* Réduire la taille de la police pour les tablettes */
@@ -115,7 +121,6 @@ img.logo {
     }
 }
 
-/* Pour les écrans moyens et petits (tablettes et téléphones) */
 @media (max-width: 1500px) {
     .navtextcolor, .animate-hover {
         font-size: 16px; /* Réduire la taille de la police pour les tablettes */

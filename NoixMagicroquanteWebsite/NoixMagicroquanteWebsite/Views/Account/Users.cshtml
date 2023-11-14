@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ICollection<NoixMagicroquanteWebsite.Models.User>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="center">
+        <h1>Il n'y a pas encore d'utilisateurs !</h1>
+    </div>
+}
+else
+{
+    <div class="center-top">
+        <table class="table shadow text-center">
+            <thead>
+                <tr class="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Nom d'utilisateur</th>
+                    <th scope="col">Courriel</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="align-middle">
+                        <th scope="row">@user.UserId</th>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <a class="btn btn-primary" href="@Url.Action("Edit", "Account", new { id = user.UserId })">Modifier</a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })">Supprimer</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

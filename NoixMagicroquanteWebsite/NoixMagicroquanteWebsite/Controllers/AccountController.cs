@@ -28,6 +28,13 @@ namespace NoixMagicroquanteWebsite.Controllers
             return View(user);
         }
 
+        public IActionResult Users()
+        {
+            ViewBag.Title = "Noix MagiCroquantes - Utilisateurs";
+            var users = db.User.Where(u => u.UserId != 1).ToList();
+            return View(users);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int UserId, string FirstName, string LastName, string UserName, string Email, string OldPassword, string Password, string ConfirmPassword)
