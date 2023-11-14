@@ -31,8 +31,38 @@ img.logo {
     border-radius: 50%;
 }
 
-.card-background {
+.card-background, .table-head-background {
     background-color: #39485A !important;
+}
+
+/* Style général du tableau */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Style pour les cellules du tableau */
+th, td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #39485A; /* Bordure en bas pour chaque cellule */
+}
+
+/* Supprimer la bordure du dernier tr pour ne pas avoir de double bordure en bas */
+tbody tr:last-child th,
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Arrondir les coins en haut du tableau */
+thead th:first-child {
+    border-top-left-radius: 0.5rem;
+}
+
+thead th:last-child {
+    border-top-right-radius: 0.5rem;
 }
 
 .text-color {
@@ -70,11 +100,11 @@ img.logo {
     transition: max-height 0.5s ease-out; /* Animation sur 0.5 secondes */
 }
 
-/* Style lorsque la section est visible */
-#hiddenFields.active {
-    max-height: 500px;
-    transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
-}
+    /* Style lorsque la section est visible */
+    #hiddenFields.active {
+        max-height: 500px;
+        transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+    }
 
 .center {
     display: flex;
