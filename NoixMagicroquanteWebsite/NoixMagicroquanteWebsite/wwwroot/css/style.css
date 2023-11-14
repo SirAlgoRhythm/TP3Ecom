@@ -109,6 +109,10 @@ img.logo {
     .card-width {
         width: 40%;
     }
+
+    .margin-top {
+        margin-top: 0;
+    }
 }
 
 /* Pour les écrans moyens et petits (tablettes et téléphones) */
@@ -127,6 +131,10 @@ img.logo {
 
     .card-width {
         width: 60%;
+    }
+
+    .margin-top {
+        margin-top: 10rem;
     }
 }
 
@@ -150,6 +158,10 @@ img.logo {
 
     nav {
         height: auto; /* Hauteur auto pour permettre plus de flexibilité sur les petits écrans */
+    }
+
+    .margin-top {
+        margin-top: 10rem;
     }
 }
 
@@ -183,5 +195,9 @@ img.logo {
 
     .card-width {
         width: 80%;
+    }
+
+    .margin-top {
+        margin-top: 10rem;
     }
 }
