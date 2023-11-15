@@ -1,45 +1,4 @@
-﻿// Code permettant de gerer la creation d'un utilisateur dans la partie administrative
-var createUserForm = document.getElementById('createUserForm');
-if (createUserForm) {
-    createUserForm.addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        // Créer un objet FormData à partir du formulaire
-        var formData = new FormData(createUserForm);
-
-        // Validez le formulaire
-        if (!await validateForm(formData, null)) {
-            return; // Stoppez la soumission du formulaire si la validation échoue
-        }
-
-        // Envoi de la requête HTTP à AccountController
-        fetch('/account/signup', {
-            method: 'POST',
-            body: formData
-        })
-        .then(data => {
-            $('#createUserModal').modal('hide');
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
-    });
-
-    $('#createUserModal').on('show.bs.modal', function (event) {
-        createUserForm.reset();
-
-        // Effacer les messages d'erreur lors de l'ouverture de la modale
-        document.getElementById('FirstNameError').innerHTML = '';
-        document.getElementById('LastNameError').innerHTML = '';
-        document.getElementById('UserNameError').innerHTML = '';
-        document.getElementById('EmailError').innerHTML = '';
-        document.getElementById('PasswordError').innerHTML = '';
-        document.getElementById('ConfirmPasswordError').innerHTML = '';
-    });
-}
-
-// Fonctions pour vérifier l'email de manière asynchrone
+﻿// Fonctions pour vérifier l'email de manière asynchrone
 async function checkEmail(email) {
     const response = await fetch('/account/checkemail?email=' + encodeURIComponent(email));
     const isEmailTaken = await response.json();
@@ -55,13 +14,25 @@ async function checkEmailWithId(email, id) {
 async function validateForm(formData, UserId) {
     let isValid = true;
 
-    // Effacez d'abord tous les messages d'erreur précédents
-    document.getElementById('FirstNameError').innerHTML = '';
-    document.getElementById('LastNameError').innerHTML = '';
-    document.getElementById('UserNameError').innerHTML = '';
-    document.getElementById('EmailError').innerHTML = '';
-    document.getElementById('PasswordError').innerHTML = '';
-    document.getElementById('ConfirmPasswordError').innerHTML = '';
+    if (UserId == null) {
+        // Effacez d'abord tous les messages d'erreur précédents
+        document.getElementById('FirstNameError').innerHTML = '';
+        document.getElementById('LastNameError').innerHTML = '';
+        document.getElementById('UserNameError').innerHTML = '';
+        document.getElementById('EmailError').innerHTML = '';
+        document.getElementById('PasswordError').innerHTML = '';
+        document.getElementById('ConfirmPasswordError').innerHTML = '';
+    }
+    else {
+        document.getElementById('editFirstNameError').innerHTML = '';
+        document.getElementById('editLastNameError').innerHTML = '';
+        document.getElementById('editUserNameError').innerHTML = '';
+        document.getElementById('editEmailError').innerHTML = '';
+        document.getElementById('editPasswordError').innerHTML = '';
+        document.getElementById('editConfirmPasswordError').innerHTML = '';
+        if (document.getElementById('NewPassword'))
+            document.getElementById('editNewPasswordError').innerHTML = '';
+    }
 
     // Vérifiez que tous les champs requis sont remplis
     for (let [key, value] of formData.entries()) {
@@ -98,6 +69,9 @@ async function validateForm(formData, UserId) {
                     else
                         document.getElementById('editPasswordError').innerHTML = 'Le mot de passe est requis.';
                     break;
+                case 'NewPassword':
+                    document.getElementById('editNewPasswordError').innerHTML = 'Le nouveau mot de passe est requis.';
+                    break;
                 case 'ConfirmPassword':
                     if (UserId == null)
                         document.getElementById('ConfirmPasswordError').innerHTML = 'La confirmation du mot de passe est requise.';
@@ -125,12 +99,61 @@ async function validateForm(formData, UserId) {
     }
 
     // Vérifiez que les mots de passe correspondent
-    if (formData.get('Password') && formData.get('Password') !== formData.get('ConfirmPassword')) {
-        isValid = false;
-        document.getElementById('ConfirmPasswordError').innerHTML = 'Les mots de passe ne correspondent pas.';
+    if (document.getElementById('NewPassword') && document.getElementById('NewPassword').value != '') {
+        if (formData.get('NewPassword') && formData.get('NewPassword') !== formData.get('ConfirmPassword')) {
+            isValid = false;
+            document.getElementById('editConfirmPasswordError').innerHTML = 'Les nouveaux mots de passe ne correspondent pas.';
+        }
+    }
+    else {
+        if (formData.get('Password') && formData.get('Password') !== formData.get('ConfirmPassword')) {
+            isValid = false;
+            document.getElementById('editConfirmPasswordError').innerHTML = 'Les mots de passe ne correspondent pas.';
+        }
     }
 
     return isValid;
+}
+
+// Code permettant de gerer la creation d'un utilisateur dans la partie administrative
+var createUserForm = document.getElementById('createUserForm');
+if (createUserForm) {
+    createUserForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        // Créer un objet FormData à partir du formulaire
+        var formData = new FormData(createUserForm);
+
+        // Validez le formulaire
+        if (!await validateForm(formData, null)) {
+            return; // Stoppez la soumission du formulaire si la validation échoue
+        }
+
+        // Envoi de la requête HTTP à AccountController
+        fetch('/account/signup', {
+            method: 'POST',
+            body: formData
+        })
+            .then(data => {
+                $('#createUserModal').modal('hide');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    });
+
+    $('#createUserModal').on('show.bs.modal', function (event) {
+        createUserForm.reset();
+
+        // Effacer les messages d'erreur lors de l'ouverture de la modale
+        document.getElementById('FirstNameError').innerHTML = '';
+        document.getElementById('LastNameError').innerHTML = '';
+        document.getElementById('UserNameError').innerHTML = '';
+        document.getElementById('EmailError').innerHTML = '';
+        document.getElementById('PasswordError').innerHTML = '';
+        document.getElementById('ConfirmPasswordError').innerHTML = '';
+    });
 }
 
 // Code permettant de gerer la modification d'un utilisateur dans la partie administrative
@@ -171,30 +194,65 @@ if (editUserForm) {
             method: 'POST',
             body: formData
         })
-        .then(data => {
-            $('#editUserModal').modal('hide');
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
+            .then(data => {
+                $('#editUserModal').modal('hide');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    });
 
-        $('#editUserModal').on('show.bs.modal', function (event) {
-            // Effacer les messages d'erreur lors de l'ouverture de la modale
-            document.getElementById('editFirstNameError').innerHTML = '';
-            document.getElementById('editLastNameError').innerHTML = '';
-            document.getElementById('editUserNameError').innerHTML = '';
-            document.getElementById('editEmailError').innerHTML = '';
-            document.getElementById('editPasswordError').innerHTML = '';
-            document.getElementById('editConfirmPasswordError').innerHTML = '';
-        });
-    })
+    $('#editUserModal').on('show.bs.modal', function (event) {
+        editUserForm.reset();
+
+        // Effacer les messages d'erreur lors de l'ouverture de la modale
+        document.getElementById('editFirstNameError').innerHTML = '';
+        document.getElementById('editLastNameError').innerHTML = '';
+        document.getElementById('editUserNameError').innerHTML = '';
+        document.getElementById('editEmailError').innerHTML = '';
+        document.getElementById('editPasswordError').innerHTML = '';
+        document.getElementById('editConfirmPasswordError').innerHTML = '';
+    });
 }
 
 // Code permettant de gerer la modification d'un utilisateur dans la partie compte
 var editAccountForm = document.getElementById('editAccountForm');
 if (editAccountForm) {
-    //a faire
+    editAccountForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        // Créer un objet FormData à partir du formulaire
+        var formData = new FormData(editAccountForm);
+
+        // Validez le formulaire
+        if (!await validateForm(formData, formData.get('UserId'))) {
+            return; // Stoppez la soumission du formulaire si la validation échoue
+        }
+
+        // Envoi de la requête HTTP à AccountController
+        fetch('/account/editaccount', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur réseau');
+            }
+            return response.json(); // Convertir la réponse en JSON
+        })
+        .then(data => {
+            if (!data.success) {
+                // Affichez le message d'erreur dans l'élément approprié
+                document.getElementById('editPasswordError').textContent = data.message;
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+    });
 }
 
 function togglePasswordVisibility() {
@@ -246,5 +304,8 @@ function toggleAccountEdit() {
         editButton.style.display = 'inline-block';
         saveButton.style.display = 'none';
         cancelButton.style.display = 'none';
+        setTimeout(function () {
+            window.location.reload();
+        }, 500);
     }
 }

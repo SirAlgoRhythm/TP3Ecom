@@ -59,92 +59,77 @@ namespace NoixMagicroquanteWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Récupération de l'utilisateur dans la base de données
-                var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
+                try
+                {
+                    // Récupération de l'utilisateur dans la base de données
+                    var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
 
-                string hashedPassword = _userManager.HashPassword(userInDb, user.Password);
-                userInDb.FirstName = user.FirstName;
-                userInDb.LastName = user.LastName;
-                userInDb.UserName = user.UserName;
-                userInDb.Email = user.Email;
-                userInDb.Password = hashedPassword;
+                    string hashedPassword = _userManager.HashPassword(userInDb, user.Password);
+                    userInDb.FirstName = user.FirstName;
+                    userInDb.LastName = user.LastName;
+                    userInDb.UserName = user.UserName;
+                    userInDb.Email = user.Email;
+                    userInDb.IsAdmin = user.IsAdmin;
+                    userInDb.Password = hashedPassword;
 
-                db.Update(userInDb);
-                db.SaveChanges();
+                    db.Update(userInDb);
+                    db.SaveChanges();
 
-                TempData["Message"] = "Votre compte à été modifié avec succès !";
-                return RedirectToAction("Users", "Account");
+                    TempData["Message"] = "L'utilisateur à été modifié avec succès !";
+                    return Json(new { success = true, message = "L'utilisateur à été modifié avec succès !" });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                    return Json(new { success = false, message = ex.Message });
+                }
             }
             else
             {
-                TempData["Error"] = "La modification de votre compte a échoué";
-                return RedirectToAction("Users", "Account");
+                TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                return Json(new { success = false, message = "La modification de l'utilisateur a échoué." });
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditAccount(User user, string NewPassword, string ConfirmPassword)
+        public IActionResult EditAccount(User user, string NewPassword)
         {
             if (ModelState.IsValid)
             {
-                // Récupération de l'utilisateur dans la base de données
-                var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
-
-                if (!CheckPassword(userInDb, user.Password))
+                try
                 {
-                    TempData["Error"] = "Erreur, vérifiez les informations que vous avez entré.";
-                    return RedirectToAction("Index", "Account");
-                }
+                    // Récupération de l'utilisateur dans la base de données
+                    var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
 
-                if (NewPassword != ConfirmPassword)
+                    if (!CheckPassword(userInDb, user.Password))
+                    {
+                        return Json(new { success = false, message = "Vérifiez les informations." });
+                    }
+
+                    string hashedPassword = _userManager.HashPassword(userInDb, NewPassword);
+                    userInDb.FirstName = user.FirstName;
+                    userInDb.LastName = user.LastName;
+                    userInDb.UserName = user.UserName;
+                    userInDb.Email = user.Email;
+                    userInDb.Password = hashedPassword;
+
+                    db.Update(userInDb);
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Votre compte à été modifié avec succès !";
+                    return Json(new { success = true, message = "Votre compte a été modifié avec succès !" });
+                } 
+                catch (Exception ex)
                 {
-                    TempData["Error"] = "Erreur, le nouveau mot de passe et la confirmation ne correspondent pas.";
-                    return RedirectToAction("Index", "Account");
+                    TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                    return Json(new { success = false, message = ex.Message });
                 }
-
-                // Vérifiez que l'e-mail n'est pas déjà utilisé par un autre utilisateur.
-                var existingUserWithEmail = db.User.AsNoTracking().SingleOrDefault(u => u.Email == user.Email);
-                if (existingUserWithEmail != null && existingUserWithEmail.UserId != userInDb.UserId)
-                {
-                    TempData["Error"] = "Cette adresse e-mail est déjà utilisée par un autre compte.";
-                    return RedirectToAction("Index", "Account");
-                }
-
-                string hashedPassword = _userManager.HashPassword(userInDb, NewPassword);
-
-                userInDb.FirstName = user.FirstName;
-                userInDb.LastName = user.LastName;
-                userInDb.UserName = user.UserName;
-                userInDb.Email = user.Email;
-                userInDb.Password = hashedPassword;
-
-                db.Update(userInDb);
-                db.SaveChanges();
-
-                TempData["Message"] = "Votre compte à été modifié avec succès !";
-                return RedirectToAction("Index", "Account");
             }
             else
             {
-                TempData["Error"] = "La modification de votre compte a échoué";
-
-                if (user.Password.IsNullOrEmpty())
-                {
-                    return RedirectToAction("Index", "Account");
-                }
-                else if (ConfirmPassword.IsNullOrEmpty())
-                {
-                    return RedirectToAction("Index", "Account");
-                }
-                else if (NewPassword != ConfirmPassword)
-                {
-                    return RedirectToAction("Index", "Account");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Account");
-                }
+                TempData["Error"] = "La modification de votre compte a échoué.";
+                return Json(new { success = false, message = "La modification de votre compte a échoué." });
             }
         }
 
