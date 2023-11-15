@@ -21,6 +21,12 @@ namespace NoixMagicroquanteWebsite.Controllers
             return result == PasswordVerificationResult.Success;
         }
 
+        public bool CheckEmail(string email)
+        {
+            var user = db.User.FirstOrDefault(u => u.Email == email);
+            return user != null;
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";

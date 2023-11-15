@@ -15,6 +15,12 @@
 }
 else
 {
+    <div class="text-end">
+        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
+        </button>
+    </div>
+
     <div class="center-top">
         <table class="shadow text-center">
             <thead class="table-head-background">
@@ -45,4 +51,51 @@ else
             </tbody>
         </table>
     </div>
+
+    <!-- Modal de création -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content card-background">
+                <div class="modal-header">
+                    <h5 class="modal-title text-color" id="createUserModalLabel">Créer un utilisateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="createUserForm">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="field-background user-info form-group">
+                            <label for="FirstName"><b>Prénom :</b></label>
+                            <input type="text" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="LastName"><b>Nom :</b></label>
+                            <input type="text" id="LastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="UserName"><b>Nom d'utilisateur :</b></label>
+                            <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="Email"><b>Courriel :</b></label>
+                            <input type="email" id="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="Password"><b>Mot de passe :</b></label>
+                            <input type="password" id="Password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de modification -->
 }

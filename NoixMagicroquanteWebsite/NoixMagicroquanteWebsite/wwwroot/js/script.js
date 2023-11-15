@@ -1,4 +1,34 @@
-﻿function togglePasswordVisibility() {
+﻿var createUserForm = document.getElementById('createUserForm');
+if (createUserForm) {
+    createUserForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Créer un objet FormData à partir du formulaire
+        var formData = new FormData(createUserForm);
+
+        // Remplacez 'votre_endpoint_pour_creer_utilisateur' par l'URL de votre API
+        fetch('/account/signup', {
+            method: 'POST',
+            body: formData
+        })
+        .then(data => {
+            console.log(data);
+            // Gérez la réponse ici, par exemple en fermant la fenêtre modale
+            // et en mettant à jour l'affichage pour montrer le nouvel utilisateur
+            $('#createUserModal').modal('hide');
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+    });
+
+    $('#createUserModal').on('show.bs.modal', function (event) {
+        createUserForm.reset();
+    });
+}
+
+function togglePasswordVisibility() {
     var passwordInput = document.getElementById('Password');
     var passwordIcon = document.getElementById('passwordIcon');
     if (passwordInput.type === 'password') {
