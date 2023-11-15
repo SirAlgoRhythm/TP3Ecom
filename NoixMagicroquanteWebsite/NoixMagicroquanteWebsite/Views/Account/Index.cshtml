@@ -22,7 +22,7 @@
             <h4 class="text-color text-center mt-4">Compte de @Model.UserName</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Edit" method="post">
+            <form id="editAccountForm" asp-action="EditAccount" method="post">
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="UserId" value="@Model.UserId" />
                 <div class="field-background user-info mb-3">

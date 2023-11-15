@@ -52,7 +52,7 @@ else
                             <td>Oui</td>
                         }
                         <td>
-                            <a class="btn btn-primary" href="@Url.Action("Edit", "Account", new { id = user.UserId })">Modifier</a>
+                            <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal">Modifier</button>
                             <a class="btn btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })">Supprimer</a>
                         </td>
                     </tr>
@@ -79,34 +79,34 @@ else
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="LastName"><b>Nom :</b></label>
-                            <input type="text" id="LastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                            <input type="text" name="LastName" class="form-control" placeholder="Entrez votre nom" />
                             <span id="LastNameError" class="text-danger"></span>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="UserName"><b>Nom d'utilisateur :</b></label>
-                            <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                            <input type="text" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
                             <span id="UserNameError" class="text-danger"></span>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="Email"><b>Courriel :</b></label>
-                            <input type="email" id="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                            <input type="email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
                             <span id="EmailError" class="text-danger"></span>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="IsAdmin"><b>Administrateur :</b></label>
-                            <select id="IsAdmin" name="IsAdmin" class="form-select">
+                            <select name="IsAdmin" class="form-select">
                                 <option value="false">Non</option>
                                 <option value="true">Oui</option>
                             </select>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="Password"><b>Mot de passe :</b></label>
-                            <input type="password" id="Password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                            <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
                             <span id="PasswordError" class="text-danger"></span>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
-                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                            <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
                             <span id="ConfirmPasswordError" class="text-danger"></span>
                         </div>
                     </div>
@@ -120,4 +120,61 @@ else
     </div>
 
     <!-- Modal de modification -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content card-background">
+                <div class="modal-header">
+                    <h5 class="modal-title text-color" id="editUserModalLabel">Modifier un utilisateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editUserForm">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="field-background user-info form-group">
+                            <input type="hidden" id="editUserId" for="UserId" name="UserId" class="form-control" />
+                            <label for="FirstName"><b>Prénom :</b></label>
+                            <input type="text" id="editFirstName" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
+                            <span id="editFirstNameError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="LastName"><b>Nom :</b></label>
+                            <input type="text" id="editLastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                            <span id="editLastNameError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="UserName"><b>Nom d'utilisateur :</b></label>
+                            <input type="text" id="editUserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                            <span id="editUserNameError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="Email"><b>Courriel :</b></label>
+                            <input type="email" id="editEmail" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                            <span id="editEmailError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="IsAdmin"><b>Administrateur :</b></label>
+                            <select id="editIsAdmin" name="IsAdmin" class="form-select">
+                                <option value="false">Non</option>
+                                <option value="true">Oui</option>
+                            </select>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="Password"><b>Mot de passe :</b></label>
+                            <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                            <span id="editPasswordError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                            <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                            <span id="editConfirmPasswordError" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 }

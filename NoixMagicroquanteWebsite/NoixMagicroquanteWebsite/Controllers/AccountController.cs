@@ -28,6 +28,17 @@ namespace NoixMagicroquanteWebsite.Controllers
             return Json(isEmailTaken);
         }
 
+        public async Task<IActionResult> CheckEmailWithId(string email, int id)
+        {
+            var user = await db.User.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+                return Json(false);
+            else if (user.UserId == id)
+                return Json(false);
+            else
+                return Json(true);
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";
@@ -44,7 +55,36 @@ namespace NoixMagicroquanteWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(User user, string NewPassword, string ConfirmPassword)
+        public IActionResult EditUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                // Récupération de l'utilisateur dans la base de données
+                var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
+
+                string hashedPassword = _userManager.HashPassword(userInDb, user.Password);
+                userInDb.FirstName = user.FirstName;
+                userInDb.LastName = user.LastName;
+                userInDb.UserName = user.UserName;
+                userInDb.Email = user.Email;
+                userInDb.Password = hashedPassword;
+
+                db.Update(userInDb);
+                db.SaveChanges();
+
+                TempData["Message"] = "Votre compte à été modifié avec succès !";
+                return RedirectToAction("Users", "Account");
+            }
+            else
+            {
+                TempData["Error"] = "La modification de votre compte a échoué";
+                return RedirectToAction("Users", "Account");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAccount(User user, string NewPassword, string ConfirmPassword)
         {
             if (ModelState.IsValid)
             {
