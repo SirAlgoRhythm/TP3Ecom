@@ -44,39 +44,39 @@ namespace NoixMagicroquanteWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int UserId, string FirstName, string LastName, string UserName, string Email, string OldPassword, string Password, string ConfirmPassword)
+        public IActionResult Edit(User user, string NewPassword, string ConfirmPassword)
         {
             if (ModelState.IsValid)
             {
                 // Récupération de l'utilisateur dans la base de données
-                var userInDb = db.User.AsNoTracking().First(u => u.UserId == UserId);
+                var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
 
-                if (!CheckPassword(userInDb, OldPassword))
+                if (!CheckPassword(userInDb, user.Password))
                 {
                     TempData["Error"] = "Erreur, vérifiez les informations que vous avez entré.";
                     return RedirectToAction("Index", "Account");
                 }
 
-                if (Password != ConfirmPassword)
+                if (NewPassword != ConfirmPassword)
                 {
                     TempData["Error"] = "Erreur, le nouveau mot de passe et la confirmation ne correspondent pas.";
                     return RedirectToAction("Index", "Account");
                 }
 
                 // Vérifiez que l'e-mail n'est pas déjà utilisé par un autre utilisateur.
-                var existingUserWithEmail = db.User.AsNoTracking().SingleOrDefault(u => u.Email == Email);
+                var existingUserWithEmail = db.User.AsNoTracking().SingleOrDefault(u => u.Email == user.Email);
                 if (existingUserWithEmail != null && existingUserWithEmail.UserId != userInDb.UserId)
                 {
                     TempData["Error"] = "Cette adresse e-mail est déjà utilisée par un autre compte.";
                     return RedirectToAction("Index", "Account");
                 }
 
-                string hashedPassword = _userManager.HashPassword(userInDb, Password);
+                string hashedPassword = _userManager.HashPassword(userInDb, NewPassword);
 
-                userInDb.FirstName = FirstName;
-                userInDb.LastName = LastName;
-                userInDb.UserName = UserName;
-                userInDb.Email = Email;
+                userInDb.FirstName = user.FirstName;
+                userInDb.LastName = user.LastName;
+                userInDb.UserName = user.UserName;
+                userInDb.Email = user.Email;
                 userInDb.Password = hashedPassword;
 
                 db.Update(userInDb);
@@ -89,7 +89,7 @@ namespace NoixMagicroquanteWebsite.Controllers
             {
                 TempData["Error"] = "La modification de votre compte a échoué";
 
-                if (OldPassword.IsNullOrEmpty())
+                if (user.Password.IsNullOrEmpty())
                 {
                     return RedirectToAction("Index", "Account");
                 }
@@ -97,7 +97,7 @@ namespace NoixMagicroquanteWebsite.Controllers
                 {
                     return RedirectToAction("Index", "Account");
                 }
-                else if (Password != ConfirmPassword)
+                else if (NewPassword != ConfirmPassword)
                 {
                     return RedirectToAction("Index", "Account");
                 }

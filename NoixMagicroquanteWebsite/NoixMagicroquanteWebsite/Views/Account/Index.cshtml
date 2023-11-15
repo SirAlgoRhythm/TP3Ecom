@@ -52,14 +52,14 @@
                 <div id="hiddenFields">
                     <div class="field-background user-info mb-3">
                         <div class="mb-1">
-                            <label for="OldPassword"><b>Ancien mot de passe :</b></label>
-                            <input type="password" id="OldPassword" name="OldPassword" class="form-control" placeholder="Entrez votre ancien mot de passe" required />
+                            <label asp-for="Password"><b>Ancien mot de passe :</b></label>
+                            <input type="password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre ancien mot de passe" required />
                         </div>
                     </div>
                     <div class="field-background user-info mb-3">
                         <div class="mb-1">
-                            <label asp-for="Password"><b>Nouveau mot de passe :</b></label>
-                            <input type="password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre nouveau mot de passe" required />
+                            <label for="NewPassword"><b>Nouveau mot de passe :</b></label>
+                            <input type="password" id="NewPassword" name="NewPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" required />
                         </div>
                     </div>
                     <div class="field-background user-info mb-3">
