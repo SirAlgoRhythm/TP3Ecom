@@ -6,6 +6,11 @@ if (createUserForm) {
         // Créer un objet FormData à partir du formulaire
         var formData = new FormData(createUserForm);
 
+        // Validez le formulaire
+        if (!validateForm(formData)) {
+            return; // Stoppez la soumission du formulaire si la validation échoue
+        }
+
         // Remplacez 'votre_endpoint_pour_creer_utilisateur' par l'URL de votre API
         fetch('/account/signup', {
             method: 'POST',
@@ -25,7 +30,62 @@ if (createUserForm) {
 
     $('#createUserModal').on('show.bs.modal', function (event) {
         createUserForm.reset();
+
+        // Effacer les messages d'erreur lors de l'ouverture de la modale
+        document.getElementById('FirstNameError').innerHTML = '';
+        document.getElementById('LastNameError').innerHTML = '';
+        document.getElementById('UserNameError').innerHTML = '';
+        document.getElementById('EmailError').innerHTML = '';
+        document.getElementById('PasswordError').innerHTML = '';
+        document.getElementById('ConfirmPasswordError').innerHTML = '';
     });
+}
+
+function validateForm(formData) {
+    let isValid = true;
+
+    // Effacez d'abord tous les messages d'erreur précédents
+    document.getElementById('FirstNameError').innerHTML = '';
+    document.getElementById('LastNameError').innerHTML = '';
+    document.getElementById('UserNameError').innerHTML = '';
+    document.getElementById('EmailError').innerHTML = '';
+    document.getElementById('PasswordError').innerHTML = '';
+    document.getElementById('ConfirmPasswordError').innerHTML = '';
+
+    // Vérifiez que tous les champs requis sont remplis
+    for (let [key, value] of formData.entries()) {
+        if (!value) {
+            isValid = false;
+            switch (key) {
+                case 'FirstName':
+                    document.getElementById('FirstNameError').innerHTML = 'Le prénom est requis.';
+                    break;
+                case 'LastName':
+                    document.getElementById('LastNameError').innerHTML = 'Le nom est requis.';
+                    break;
+                case 'UserName':
+                    document.getElementById('UserNameError').innerHTML = 'Le nom d\'utilisateur est requis.';
+                    break;
+                case 'Email':
+                    document.getElementById('EmailError').innerHTML = 'L\'adresse courriel est requise.';
+                    break;
+                case 'Password':
+                    document.getElementById('PasswordError').innerHTML = 'Le mot de passe est requis.';
+                    break;
+                case 'ConfirmPassword':
+                    document.getElementById('ConfirmPasswordError').innerHTML = 'La confirmation du mot de passe est requise.';
+                    break;
+            }
+        }
+    }
+
+    // Vérifiez que les mots de passe correspondent
+    if (formData.get('Password') && formData.get('Password') !== formData.get('ConfirmPassword')) {
+        isValid = false;
+        document.getElementById('ConfirmPasswordError').innerHTML = 'Les mots de passe ne correspondent pas.';
+    }
+
+    return isValid;
 }
 
 function togglePasswordVisibility() {
