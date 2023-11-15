@@ -30,6 +30,7 @@ else
                     <th scope="col">Nom</th>
                     <th scope="col">Nom d'utilisateur</th>
                     <th scope="col">Courriel</th>
+                    <th scope="col">Administrateur</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -42,6 +43,14 @@ else
                         <td>@user.LastName</td>
                         <td>@user.UserName</td>
                         <td>@user.Email</td>
+                        @if (user.IsAdmin == false)
+                        {
+                            <td>Non</td>
+                        }
+                        else
+                        {
+                            <td>Oui</td>
+                        }
                         <td>
                             <a class="btn btn-primary" href="@Url.Action("Edit", "Account", new { id = user.UserId })">Modifier</a>
                             <a class="btn btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })">Supprimer</a>
@@ -82,6 +91,13 @@ else
                             <label for="Email"><b>Courriel :</b></label>
                             <input type="email" id="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
                             <span id="EmailError" class="text-danger"></span>
+                        </div>
+                        <div class="field-background user-info form-group">
+                            <label for="IsAdmin"><b>Administrateur :</b></label>
+                            <select id="IsAdmin" name="IsAdmin" class="form-select">
+                                <option value="false">Non</option>
+                                <option value="true">Oui</option>
+                            </select>
                         </div>
                         <div class="field-background user-info form-group">
                             <label for="Password"><b>Mot de passe :</b></label>
