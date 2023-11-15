@@ -1,25 +1,22 @@
 ﻿var createUserForm = document.getElementById('createUserForm');
 if (createUserForm) {
-    createUserForm.addEventListener('submit', function (event) {
+    createUserForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
         // Créer un objet FormData à partir du formulaire
         var formData = new FormData(createUserForm);
 
         // Validez le formulaire
-        if (!validateForm(formData)) {
+        if (!await validateForm(formData)) {
             return; // Stoppez la soumission du formulaire si la validation échoue
         }
 
-        // Remplacez 'votre_endpoint_pour_creer_utilisateur' par l'URL de votre API
+        // Envoi de la requête HTTP à AccountController
         fetch('/account/signup', {
             method: 'POST',
             body: formData
         })
         .then(data => {
-            console.log(data);
-            // Gérez la réponse ici, par exemple en fermant la fenêtre modale
-            // et en mettant à jour l'affichage pour montrer le nouvel utilisateur
             $('#createUserModal').modal('hide');
             window.location.reload();
         })
@@ -41,7 +38,14 @@ if (createUserForm) {
     });
 }
 
-function validateForm(formData) {
+// Fonction pour vérifier l'email de manière asynchrone
+async function checkEmail(email) {
+    const response = await fetch('/account/checkemail?email=' + encodeURIComponent(email));
+    const isEmailTaken = await response.json();
+    return !isEmailTaken;
+}
+
+async function validateForm(formData) {
     let isValid = true;
 
     // Effacez d'abord tous les messages d'erreur précédents
@@ -77,6 +81,12 @@ function validateForm(formData) {
                     break;
             }
         }
+    }
+    
+    // Vérifiez si l'adresse courriel est déjà utilisée
+    if (formData.get('Email') && !await checkEmail(formData.get('Email'))) {
+        isValid = false;
+        document.getElementById('EmailError').innerHTML = 'Cette adresse courriel est déjà utilisée.';
     }
 
     // Vérifiez que les mots de passe correspondent

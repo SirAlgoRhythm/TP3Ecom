@@ -21,10 +21,11 @@ namespace NoixMagicroquanteWebsite.Controllers
             return result == PasswordVerificationResult.Success;
         }
 
-        public bool CheckEmail(string email)
+        public async Task<IActionResult> CheckEmail(string email)
         {
-            var user = db.User.FirstOrDefault(u => u.Email == email);
-            return user != null;
+            var user = await db.User.FirstOrDefaultAsync(u => u.Email == email);
+            bool isEmailTaken = user != null;
+            return Json(isEmailTaken);
         }
 
         public IActionResult Index()
@@ -187,11 +188,14 @@ namespace NoixMagicroquanteWebsite.Controllers
                     db.User.Add(user);
                     db.SaveChanges();
 
-                    int IsAdmin = _userManager.IsAdmin(user);
+                    if (!HttpContext.Session.GetInt32("UserId").HasValue)
+                    {
+                        int IsAdmin = _userManager.IsAdmin(user);
 
-                    // Stockage de l'ID de l'utilisateur connecté dans la session
-                    HttpContext.Session.SetInt32("UserId", user.UserId);
-                    HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+                        // Stockage de l'ID de l'utilisateur connecté dans la session
+                        HttpContext.Session.SetInt32("UserId", user.UserId);
+                        HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+                    }
 
                     TempData["Message"] = "Votre compte a été créé avec succès !";
                     return RedirectToAction("Index", "Home");
