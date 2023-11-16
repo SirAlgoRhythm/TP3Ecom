@@ -34,13 +34,13 @@ else
         <table class="shadow text-center">
             <thead class="table-head-background">
                 <tr class="align-middle text-color">
-                    <th scope="col">Id</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Nom d'utilisateur</th>
-                    <th scope="col">Courriel</th>
-                    <th scope="col">Administrateur</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" class="col-id">Id</th>
+                    <th scope="col" class="col-first-name">Prénom</th>
+                    <th scope="col" class="col-last-name">Nom</th>
+                    <th scope="col" class="col-username">Nom d'utilisateur</th>
+                    <th scope="col" class="col-email">Courriel</th>
+                    <th scope="col" class="col-is-admin">Administrateur</th>
+                    <th scope="col" class="col-actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,8 +63,8 @@ else
                                 <td>Oui</td>
                             }
                             <td>
-                                <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal">Modifier</button>
-                                <button type="button" class="btn btn-danger deleteBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Supprimer</button>
+                                <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger deleteBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     }

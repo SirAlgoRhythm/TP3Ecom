@@ -65,6 +65,34 @@ thead th:last-child {
     border-top-right-radius: 0.5rem;
 }
 
+.col-id {
+    width: 5%; /* ou une autre valeur fixe comme 50px si vous préférez */
+}
+
+.col-first-name {
+    width: 15%;
+}
+
+.col-last-name {
+    width: 15%;
+}
+
+.col-username {
+    width: 20%;
+}
+
+.col-email {
+    width: 25%;
+}
+
+.col-is-admin {
+    width: 10%;
+}
+
+.col-actions {
+    width: 10%;
+}
+
 .text-color {
     color: #B8975A !important;
 }
