@@ -64,7 +64,7 @@ else
                             }
                             <td>
                                 <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal">Modifier</button>
-                                <a class="btn btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })">Supprimer</a>
+                                <button type="button" class="btn btn-danger deleteBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Supprimer</button>
                             </td>
                         </tr>
                     }
@@ -75,7 +75,7 @@ else
 
     <!-- Modal de création -->
     <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content card-background">
                 <div class="modal-header">
                     <h5 class="modal-title text-color" id="createUserModalLabel">Créer un utilisateur</h5>
@@ -123,8 +123,8 @@ else
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary">Créer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success">Créer</button>
                     </div>
                 </form>
             </div>
@@ -133,7 +133,7 @@ else
 
     <!-- Modal de modification -->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content card-background">
                 <div class="modal-header">
                     <h5 class="modal-title text-color" id="editUserModalLabel">Modifier un utilisateur</h5>
@@ -182,10 +182,30 @@ else
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success">Modifier</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de suppression -->
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content card-background">
+                <div class="modal-header">
+                    <h5 class="modal-title text-color" id="deleteUserModalLabel">Suppression d'un utilisateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body field-background field-modal">
+                    <p>Êtes-vous certain de vouloir supprimer cet utilisateur ?</p>
+                    <p>Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <a class="btn btn-danger" id="deleteUserLink" href="#">Supprimer</a>
+                </div>
             </div>
         </div>
     </div>

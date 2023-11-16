@@ -100,11 +100,11 @@ thead th:last-child {
     transition: max-height 0.5s ease-out; /* Animation sur 0.5 secondes */
 }
 
-    /* Style lorsque la section est visible */
-    #hiddenFields.active {
-        max-height: 500px;
-        transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
-    }
+/* Style lorsque la section est visible */
+#hiddenFields.active {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+}
 
 .center {
     display: flex;
@@ -138,6 +138,39 @@ thead th:last-child {
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+}
+
+.field-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 0.5rem;
+    border: solid #FAF0E6;
+    width: 95%;
+    margin: auto;
+}
+
+.field-modal p {
+    margin: auto; /* Centre le contenu de chaque élément <p> */
+    text-align: center; /* Centre le texte horizontalement */
+    font-size: 1.15rem;
+}
+
+.modal-header, .modal-footer {
+    border: none; /* Supprime les bordures du header et du footer */
+}
+
+.modal-body {
+    border-top: none; /* Supprime la bordure supérieure du body */
+    border-bottom: none; /* Supprime la bordure inférieure du body */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-dialog {
+    max-width: 600px;
 }
 
 @media (max-width: 2000px) {

@@ -258,5 +258,16 @@ namespace NoixMagicroquanteWebsite.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Delete(int UserId)
+        {
+            // Récupération de l'utilisateur correspondant à l'id
+            var user = db.User.First(u => u.UserId == UserId);
+            db.User.Remove(user);
+            db.SaveChanges();
+
+            TempData["Message"] = "L'utilisateur a été supprimé avec succès !";
+            return RedirectToAction("Users", "Account");
+        }
     }
 }

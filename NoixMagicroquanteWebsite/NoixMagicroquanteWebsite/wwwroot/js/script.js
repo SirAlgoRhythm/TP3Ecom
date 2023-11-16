@@ -255,6 +255,14 @@ if (editAccountForm) {
     });
 }
 
+document.querySelectorAll('.deleteBtn').forEach(button => {
+    button.addEventListener('click', function () {
+        var userId = this.getAttribute('data-user-id');
+        var deleteUrl = 'delete?UserId=' + userId;
+        document.getElementById('deleteUserLink').setAttribute('href', deleteUrl);
+    });
+});
+
 function togglePasswordVisibility() {
     var passwordInput = document.getElementById('Password');
     var passwordIcon = document.getElementById('passwordIcon');
