@@ -263,6 +263,15 @@ namespace NoixMagicroquanteWebsite.Controllers
         {
             // Récupération de l'utilisateur correspondant à l'id
             var user = db.User.First(u => u.UserId == UserId);
+
+            // Supression du panier actif s'il y en a un
+            var basket = db.Basket.FirstOrDefault(b => b.UserId == user.UserId && b.Active == true);
+            if (basket != null)
+            {
+                db.Basket.Remove(basket);
+            }
+
+            // Supression de l'utilisateur
             db.User.Remove(user);
             db.SaveChanges();
 
