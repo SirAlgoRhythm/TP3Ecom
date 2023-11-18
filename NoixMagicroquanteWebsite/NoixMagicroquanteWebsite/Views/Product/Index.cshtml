@@ -2,164 +2,370 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<NoixMagicroquanteWebsite.Models.Product>
 @{
     Layout = "_Layout";
     ViewBag.Title = ViewBag.Title;
 }
 
 <div class="container-fluid pTitle">
-    <h1>Les détergeants</h1>   
-
-    <div class="container-fluid d-flex flex-wrap justify-content-center productrow">
-
-        <div class="el-wrapper">
-            <div class="box-up">
-                <img class="img" src="~/images/squirrel1.png" alt=""/>
-                <div class="img-info">
-                    <div class="info-inner">
-                        <span class="p-name">Nom du produit</span>
-                    </div>
-                    <div class="a-size">Quantité disponible : <span class="size">100</span></div>
-                </div>
-            </div>
-
-            <div class="box-down">
-                <div class="h-bg">
-                <div class="h-bg-inner"></div>
-            </div>
-
-                <a class="cart" href="#">
-                <span class="price">$120</span>
-                <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                </span>
-                </a>
-            </div>
+    @if (Model.Count() == 0)
+    {
+        <div class="center">
+            <h1>Il n'y a pas de produit!</h1>
         </div>
-
-        <div class="el-wrapper">
-            <div class="box-up">
-                <img class="img" src="~/images/Logo.png" alt=""/>
-                <div class="img-info">
-                    <div class="info-inner">
-                        <span class="p-name">I feel like Pablo</span>
-                        <span class="p-company">Yeezy</span>
+    }
+    <h1>Les détergeants</h1>  
+    
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+        
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 1)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
                     </div>
-                    <div class="a-size">Available sizes : <span class="size">S , M , L , XL</span></div>
-                </div>
-            </div>
 
-            <div class="box-down">
-                <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                </div>
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
 
-                <a class="cart" href="#">
-                <span class="price">$120</span>
-                <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                </span>
-                </a>
-            </div>
-        </div>
-
-        <div class="el-wrapper">
-            <div class="box-up">
-                <img class="img" src="~/images/Logo.png" alt=""/>
-                <div class="img-info">
-                    <div class="info-inner">
-                        <span class="p-name">I feel like Pablo</span>
-                        <span class="p-company">Yeezy</span>
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
                     </div>
-                    <div class="a-size">Available sizes : <span class="size">S , M , L , XL</span></div>
-                </div>
-            </div>
-
-            <div class="box-down">
-                <div class="h-bg">
-                    <div class="h-bg-inner"></div>
                 </div>
 
-                <a class="cart" href="#">
-                <span class="price">$120</span>
-                <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                </span>
-                </a>
-            </div>
-        </div>
+            }
+        }
+    </div>
+    
+    <h1>Les outils nettoyants</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
 
-        <div class="el-wrapper">
-            <div class="box-up">
-                <img class="img" src="~/images/Logo.png" alt=""/>
-                <div class="img-info">
-                    <div class="info-inner">
-                        <span class="p-name">I feel like Pablo</span>
-                        <span class="p-company">Yeezy</span>
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 2)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
                     </div>
-                    <div class="a-size">Available sizes : <span class="size">S , M , L , XL</span></div>
-                </div>
-            </div>
 
-            <div class="box-down">
-                <div class="h-bg">
-                <div class="h-bg-inner"></div>
-            </div>
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
 
-                <a class="cart" href="#">
-                <span class="price">$120</span>
-                <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                </span>
-                </a>
-            </div>
-        </div>
-
-        <div class="el-wrapper">
-            <div class="box-up">
-                <img class="img" src="~/images/Logo.png" alt=""/>
-                <div class="img-info">
-                    <div class="info-inner">
-                        <span class="p-name">I feel like Pablo</span>
-                        <span class="p-company">Yeezy</span>
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
                     </div>
-                    <div class="a-size">Available sizes : <span class="size">S , M , L , XL</span></div>
                 </div>
-            </div>
-
-            <div class="box-down">
-                <div class="h-bg">
-                <div class="h-bg-inner"></div>
-            </div>
-
-                <a class="cart" href="#">
-                <span class="price">$120</span>
-                <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                </span>
-                </a>
-            </div>
-        </div>
+            }
+        }
     </div>
 
-
-    <h1>Les outils nettoyants</h1>
-
     <h1>Les papiers</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 3)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les biscuits</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 4)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les breuvages</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 5)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les chocolats</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 6)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les fruits</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 7)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les légumes</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 8)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les cafés</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 9)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 
     <h1>Les outils de construction</h1>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+
+        @foreach (var product in Model)
+        {
+            if (product.CategoryId == 10)
+            {
+                <div class="el-wrapper">
+                    <div class="box-up">
+                        <img class="img" src=@product.Image alt="" />
+                        <div class="img-info">
+                            <div class="info-inner">
+                                <span class="p-name">@product.Name</span>
+                            </div>
+                            <div class="a-size">Quantité disponible : <span class="size">@product.Stock</span></div>
+                        </div>
+                    </div>
+
+                    <div class="box-down">
+                        <div class="h-bg">
+                            <div class="h-bg-inner"></div>
+                        </div>
+
+                        <a class="cart" href="#">
+                            <span class="price">@product.SellingPrice $</span>
+                            <span class="add-to-cart">
+                                <span class="txt">Add in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>
 
 

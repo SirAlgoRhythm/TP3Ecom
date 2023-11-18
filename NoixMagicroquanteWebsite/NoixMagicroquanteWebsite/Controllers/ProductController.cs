@@ -2,11 +2,17 @@
 
 namespace NoixMagicroquanteWebsite.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
+        public ProductController(NoixMagicroquanteWebsiteContext context) : base(context)
+        {
+        }
+
         public IActionResult Index()
         {
-            return View();
+            ViewBag.Title = "Noix MagiCroquantes - Produits";
+            var products = db.Product.ToList();
+            return View(products);
         }
     }
 }
