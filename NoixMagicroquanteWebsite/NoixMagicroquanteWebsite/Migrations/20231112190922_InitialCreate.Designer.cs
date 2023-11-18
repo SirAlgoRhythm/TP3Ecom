@@ -12,7 +12,7 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    [Migration("20231107174800_InitialCreate")]
+    [Migration("20231112190922_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketId"));
 
-                    b.Property<bool>("Actif")
+                    b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("SellDate")
@@ -70,7 +70,7 @@ namespace NoixMagicroquanteWebsite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("BasketProduct");
                 });
 
             modelBuilder.Entity("NoixMagicroquanteWebsite.Models.Category", b =>
@@ -835,9 +835,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                         {
                             UserId = 1,
                             Email = "admin@noixmagiques.com",
-                            FirstName = "",
+                            FirstName = "admin",
                             IsAdmin = true,
-                            LastName = "",
+                            LastName = "admin",
                             Password = "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==",
                             UserName = "admin"
                         });

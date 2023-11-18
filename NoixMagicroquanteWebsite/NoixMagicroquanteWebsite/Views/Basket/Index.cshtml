@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ICollection<NoixMagicroquanteWebsite.Models.BasketProduct>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="center">
+        <h1>Votre panier est vide !</h1>
+    </div>
+}

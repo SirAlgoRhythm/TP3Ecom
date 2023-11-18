@@ -118,7 +118,7 @@ namespace NoixMagicroquanteWebsite.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Actif = table.Column<bool>(type: "bit", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     SellDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -133,7 +133,7 @@ namespace NoixMagicroquanteWebsite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrder",
+                name: "BasketProduct",
                 columns: table => new
                 {
                     BPProductId = table.Column<int>(type: "int", nullable: false),
@@ -143,15 +143,15 @@ namespace NoixMagicroquanteWebsite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrder", x => new { x.BPProductId, x.BPBasketId });
+                    table.PrimaryKey("PK_BasketProduct", x => new { x.BPProductId, x.BPBasketId });
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Basket_BPProductId",
+                        name: "FK_BasketProduct_Basket_BPProductId",
                         column: x => x.BPProductId,
                         principalTable: "Basket",
                         principalColumn: "BasketId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Product_ProductId",
+                        name: "FK_BasketProduct_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ProductId");
@@ -199,7 +199,7 @@ namespace NoixMagicroquanteWebsite.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "IsAdmin", "LastName", "Password", "UserName" },
-                values: new object[] { 1, "admin@noixmagiques.com", "", true, "", "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==", "admin" });
+                values: new object[] { 1, "admin@noixmagiques.com", "admin", true, "admin", "AQAAAAEAACcQAAAAECp0ROY8Ai0bxYY7vrNEc2AMzZ9riapPYF4eisyY2+wsXUFLUMYsjtDTO3xCV4lrlA==", "admin" });
 
             migrationBuilder.InsertData(
                 table: "Product",
@@ -254,6 +254,11 @@ namespace NoixMagicroquanteWebsite.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BasketProduct_ProductId",
+                table: "BasketProduct",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
                 table: "Product",
                 column: "CategoryId");
@@ -267,18 +272,13 @@ namespace NoixMagicroquanteWebsite.Migrations
                 name: "IX_Product_UnitId",
                 table: "Product",
                 column: "UnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductOrder_ProductId",
-                table: "ProductOrder",
-                column: "ProductId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductOrder");
+                name: "BasketProduct");
 
             migrationBuilder.DropTable(
                 name: "Basket");

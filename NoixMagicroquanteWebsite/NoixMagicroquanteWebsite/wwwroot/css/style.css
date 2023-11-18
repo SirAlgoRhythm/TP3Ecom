@@ -7,6 +7,14 @@ nav {
     height: 70px;
 }
 
+.height-element {
+    min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
+}
+
+.card-width {
+    width: 30%;
+}
+
 .navtextcolor {
     color: #B8975A !important;
     font-size: 18px; /* Taille initiale du texte */
@@ -23,10 +31,222 @@ img.logo {
     border-radius: 50%;
 }
 
+.card-background, .table-head-background {
+    background-color: #39485A !important;
+}
+
+/* Style général du tableau */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Style pour les cellules du tableau */
+th, td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #39485A; /* Bordure en bas pour chaque cellule */
+}
+
+/* Supprimer la bordure du dernier tr pour ne pas avoir de double bordure en bas */
+tbody tr:last-child th,
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Arrondir les coins en haut du tableau */
+thead th:first-child {
+    border-top-left-radius: 0.5rem;
+}
+
+thead th:last-child {
+    border-top-right-radius: 0.5rem;
+}
+
+.text-color {
+    color: #B8975A !important;
+}
+
+.card-text {
+    color: #B8975A !important;
+}
+
+.field-background {
+    background-color: #FAF0E6 !important;
+}
+
 .active-link {
     font-weight: bold;
 }
 
+.input-group-text {
+    cursor: pointer; /* Change le curseur lors du survol de l'icône */
+}
+
+.user-info {
+    background-color: #f8f9fa;
+    border-left: 4px solid #B8975A;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Style initial pour la section cachée */
+#hiddenFields {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-out; /* Animation sur 0.5 secondes */
+}
+
+    /* Style lorsque la section est visible */
+    #hiddenFields.active {
+        max-height: 500px;
+        transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+    }
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Changez 'absolute' en 'relative' */
+    margin-top: 80px; /* Ajoutez une marge en haut pour tenir compte de la navbar */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.center-create-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Changez 'absolute' en 'relative' */
+    margin-top: 80px; /* Ajoutez une marge en haut pour tenir compte de la navbar */
+    margin-bottom: 80px;
+    width: 100%;
+}
+
+.margin-top {
+    margin-top: 0rem;
+}
+
+.center-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+@media (max-width: 2000px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
+    }
+
+    .card-width {
+        width: 40%;
+    }
+
+    .margin-top {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 1500px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
+    }
+
+    .card-width {
+        width: 60%;
+    }
+
+    .margin-top {
+        margin-top: 10rem;
+    }
+}
+
+/* Pour les écrans moyens et petits (tablettes et téléphones) */
+@media (max-width: 1000px) {
+    .navtextcolor, .animate-hover {
+        font-size: 16px; /* Réduire la taille de la police pour les tablettes */
+    }
+
+    .card-background {
+        padding: 1rem; /* Réduire le padding pour les petites cartes */
+    }
+
+    .height-element {
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
+    }
+
+    .card-width {
+        width: 80%;
+    }
+
+    nav {
+        height: auto; /* Hauteur auto pour permettre plus de flexibilité sur les petits écrans */
+    }
+
+    .margin-top {
+        margin-top: 10rem;
+    }
+}
+
+/* Pour les très petits écrans (téléphones) */
+@media (max-width: 576px) {
+    .navtextcolor, .animate-hover {
+        font-size: 14px; /* Encore plus petit pour les téléphones */
+    }
+
+    .card-background {
+        margin: 0.5rem; /* Marges plus petites pour les écrans étroits */
+        width: auto; /* Permettre à la carte de s'étendre et de se contracter */
+    }
+
+    #hiddenFields.active {
+        max-height: 300px; /* Une hauteur maximale plus petite pour les petits écrans */
+    }
+
+    nav {
+        height: auto; /* Hauteur auto pour permettre plus de flexibilité sur les petits écrans */
+    }
+
+    .user-info {
+        padding: 0.25rem; /* Padding plus petit pour les informations utilisateur */
+        margin-bottom: 0.5rem; /* Moins d'espace entre les éléments */
+    }
+
+    .height-element {
+        min-height: calc(100vh - 80px); /* 100% de la hauteur de la vue moins la hauteur de la navbar */
+    }
+
+    .card-width {
+        width: 80%;
+    }
+
+    .margin-top {
+        margin-top: 10rem;
+    }
+}
 .custom-border {
     border: 10px solid #B8975A; /* Couleur personnalisée */
     border-radius: 50%; /* Pour maintenir la forme circulaire */

@@ -8,6 +8,7 @@ namespace NoixMagicroquanteWebsite.Controllers
         protected NoixMagicroquanteWebsiteContext db;
         protected int? UserId => HttpContext.Session.GetInt32("UserId");
         protected int? IsAdmin => HttpContext.Session.GetInt32("IsAdmin");
+        protected int? BasketId => HttpContext.Session.GetInt32("BasketId");
 
         public BaseController(NoixMagicroquanteWebsiteContext context)
         {
