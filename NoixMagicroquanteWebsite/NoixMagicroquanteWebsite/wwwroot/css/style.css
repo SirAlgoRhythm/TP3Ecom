@@ -248,7 +248,7 @@ thead th:last-child {
     }
 }
 .custom-border {
-    border: 10px solid #B8975A; /* Couleur personnalisée */
+    border: 10px solid #B8975A;
     border-radius: 50%; /* Pour maintenir la forme circulaire */
 }
 
