@@ -20,6 +20,9 @@
 {
     <div class="center">
         <h1>Il n'y a pas encore d'utilisateurs !</h1>
+        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
+        </button>
     </div>
 }
 else
@@ -72,141 +75,141 @@ else
             </tbody>
         </table>
     </div>
+}
 
-    <!-- Modal de création -->
-    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content card-background">
-                <div class="modal-header">
-                    <h5 class="modal-title text-color" id="createUserModalLabel">Créer un utilisateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="createUserForm">
-                    @Html.AntiForgeryToken()
-                    <div class="modal-body">
-                        <div class="field-background user-info form-group">
-                            <label for="FirstName"><b>Prénom :</b></label>
-                            <input type="text" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
-                            <span id="FirstNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="LastName"><b>Nom :</b></label>
-                            <input type="text" name="LastName" class="form-control" placeholder="Entrez votre nom" />
-                            <span id="LastNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="UserName"><b>Nom d'utilisateur :</b></label>
-                            <input type="text" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
-                            <span id="UserNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="Email"><b>Courriel :</b></label>
-                            <input type="email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
-                            <span id="EmailError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="IsAdmin"><b>Administrateur :</b></label>
-                            <select name="IsAdmin" class="form-select">
-                                <option value="false">Non</option>
-                                <option value="true">Oui</option>
-                            </select>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="Password"><b>Mot de passe :</b></label>
-                            <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
-                            <span id="PasswordError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
-                            <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
-                            <span id="ConfirmPasswordError" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-success">Créer</button>
-                    </div>
-                </form>
+<!-- Modal de création -->
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="createUserModalLabel">Créer un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal de modification -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content card-background">
-                <div class="modal-header">
-                    <h5 class="modal-title text-color" id="editUserModalLabel">Modifier un utilisateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="editUserForm">
-                    @Html.AntiForgeryToken()
-                    <div class="modal-body">
-                        <div class="field-background user-info form-group">
-                            <input type="hidden" id="editUserId" for="UserId" name="UserId" class="form-control" />
-                            <label for="FirstName"><b>Prénom :</b></label>
-                            <input type="text" id="editFirstName" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez un prénom" />
-                            <span id="editFirstNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="LastName"><b>Nom :</b></label>
-                            <input type="text" id="editLastName" name="LastName" class="form-control" placeholder="Entrez un nom" />
-                            <span id="editLastNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="UserName"><b>Nom d'utilisateur :</b></label>
-                            <input type="text" id="editUserName" name="UserName" class="form-control" placeholder="Entrez un nom d'utilisateur" />
-                            <span id="editUserNameError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="Email"><b>Courriel :</b></label>
-                            <input type="email" id="editEmail" name="Email" class="form-control" placeholder="Entrez un courriel" />
-                            <span id="editEmailError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="IsAdmin"><b>Administrateur :</b></label>
-                            <select id="editIsAdmin" name="IsAdmin" class="form-select">
-                                <option value="false">Non</option>
-                                <option value="true">Oui</option>
-                            </select>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="Password"><b>Mot de passe :</b></label>
-                            <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez le nouveau mot de passe" />
-                            <span id="editPasswordError" class="text-danger"></span>
-                        </div>
-                        <div class="field-background user-info form-group">
-                            <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
-                            <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer le mot de passe" />
-                            <span id="editConfirmPasswordError" class="text-danger"></span>
-                        </div>
+            <form id="createUserForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="field-background user-info form-group">
+                        <label for="FirstName"><b>Prénom :</b></label>
+                        <input type="text" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
+                        <span id="FirstNameError" class="text-danger"></span>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-success">Modifier</button>
+                    <div class="field-background user-info form-group">
+                        <label for="LastName"><b>Nom :</b></label>
+                        <input type="text" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                        <span id="LastNameError" class="text-danger"></span>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de suppression -->
-    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content card-background">
-                <div class="modal-header">
-                    <h5 class="modal-title text-color" id="deleteUserModalLabel">Suppression d'un utilisateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body field-background field-modal">
-                    <p>Êtes-vous certain de vouloir supprimer cet utilisateur ?</p>
-                    <p>Cette action est irréversible.</p>
+                    <div class="field-background user-info form-group">
+                        <label for="UserName"><b>Nom d'utilisateur :</b></label>
+                        <input type="text" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                        <span id="UserNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Email"><b>Courriel :</b></label>
+                        <input type="email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                        <span id="EmailError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="IsAdmin"><b>Administrateur :</b></label>
+                        <select name="IsAdmin" class="form-select">
+                            <option value="false">Non</option>
+                            <option value="true">Oui</option>
+                        </select>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Password"><b>Mot de passe :</b></label>
+                        <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                        <span id="PasswordError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                        <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                        <span id="ConfirmPasswordError" class="text-danger"></span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <a class="btn btn-danger" id="deleteUserLink" href="#">Supprimer</a>
+                    <button type="submit" class="btn btn-success">Créer</button>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de modification -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="editUserModalLabel">Modifier un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editUserForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="field-background user-info form-group">
+                        <input type="hidden" id="editUserId" for="UserId" name="UserId" class="form-control" />
+                        <label for="FirstName"><b>Prénom :</b></label>
+                        <input type="text" id="editFirstName" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez un prénom" />
+                        <span id="editFirstNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="LastName"><b>Nom :</b></label>
+                        <input type="text" id="editLastName" name="LastName" class="form-control" placeholder="Entrez un nom" />
+                        <span id="editLastNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="UserName"><b>Nom d'utilisateur :</b></label>
+                        <input type="text" id="editUserName" name="UserName" class="form-control" placeholder="Entrez un nom d'utilisateur" />
+                        <span id="editUserNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Email"><b>Courriel :</b></label>
+                        <input type="email" id="editEmail" name="Email" class="form-control" placeholder="Entrez un courriel" />
+                        <span id="editEmailError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="IsAdmin"><b>Administrateur :</b></label>
+                        <select id="editIsAdmin" name="IsAdmin" class="form-select">
+                            <option value="false">Non</option>
+                            <option value="true">Oui</option>
+                        </select>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Password"><b>Mot de passe :</b></label>
+                        <input type="password" for="Password" name="Password" class="form-control" placeholder="Entrez le nouveau mot de passe" />
+                        <span id="editPasswordError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                        <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmer le mot de passe" />
+                        <span id="editConfirmPasswordError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success">Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de suppression -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="deleteUserModalLabel">Suppression d'un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body field-background field-modal">
+                <p>Êtes-vous certain de vouloir supprimer cet utilisateur ?</p>
+                <p>Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a class="btn btn-danger" id="deleteUserLink" href="#">Supprimer</a>
             </div>
         </div>
     </div>
-}
+</div>
