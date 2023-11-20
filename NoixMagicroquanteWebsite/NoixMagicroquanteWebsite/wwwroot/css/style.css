@@ -201,6 +201,22 @@ thead th:last-child {
     max-width: 600px;
 }
 
+.container-btns {
+    display: flex;
+    align-items: center;
+}
+
+.container-search {
+    display: flex;
+    align-items: center;
+    width: 30rem;
+}
+
+.input-search {
+    width: 70%;
+    display: none;
+}
+
 @media (max-width: 2000px) {
     .navtextcolor, .animate-hover {
         font-size: 16px; /* Réduire la taille de la police pour les tablettes */

@@ -27,10 +27,23 @@
 }
 else
 {
-    <div class="text-end">
-        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#createUserModal">
-            <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
-        </button>
+    <div class="container-btns">
+        <div class="container-search mt-3">
+            <div class="input-search">
+                <input type="text" class="form-control" placeholder="Rechercher un utilisateur" />
+            </div>
+            <div class="ms-1">
+                <button type="button" class="btn btn-secondary">
+                    <i class="fa-solid fa-magnifying-glass"></i> Rechercher
+                </button>
+            </div>
+        </div>
+
+        <div class="ms-auto mt-3">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
+            </button>
+        </div>
     </div>
 
     <div class="center-top">
