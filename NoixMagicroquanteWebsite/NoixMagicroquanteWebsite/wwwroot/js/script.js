@@ -400,7 +400,11 @@ if (searchBar) {
                     return response.json(); // Convertir la réponse en JSON
                 })
                 .then(data => {
-                    createTbodyUsers(data);
+                    if (data.length > 0) {
+                        createTbodyUsers(data);
+                    } else {
+                        createTbodyEmpty();
+                    }
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
@@ -417,7 +421,11 @@ if (searchBar) {
                     return response.json(); // Convertir la réponse en JSON
                 })
                 .then(data => {
-                    createTbodyUsers(data);
+                    if (data.length > 0) {
+                        createTbodyUsers(data);
+                    } else {
+                        createTbodyEmpty();
+                    }
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
@@ -425,6 +433,16 @@ if (searchBar) {
             }
         }, 500);
     });
+}
+
+function createTbodyEmpty() {
+    var tbody = document.getElementById('tbodyUsers');
+    tbody.innerHTML = '';
+    var tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
+    `;
+    tbody.appendChild(tr);
 }
 
 function createTbodyUsers(users) {
