@@ -349,89 +349,51 @@ function toggleSearchBar() {
 var searchBar = document.getElementById('searchBar');
 if (searchBar) {
     var searchInput = searchBar.querySelector('input');
+    var searchSelect = searchBar.querySelector('select');
     var debounceTimeout;
-    searchInput.addEventListener('input', function () {
-        clearTimeout(debounceTimeout); // Annule le timeout précédent s'il existe
 
-        debounceTimeout = setTimeout(function () {
-            var searchValue = searchInput.value.toLowerCase();
-            if (searchValue.length === 0) {
-                // Envoi de la requête HTTP à AccountController
-                fetch('/account/getcurrentuserid', {
-                    method: 'GET'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau');
-                    }
-                    return response.json(); // Convertir la réponse en JSON
-                })
-                .then(data => {
-                    // Envoi de la requête HTTP à AccountController
-                    fetch('/account/getallusers?userId=' + encodeURIComponent(data), {
-                        method: 'GET'
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erreur réseau');
-                        }
-                        return response.json(); // Convertir la réponse en JSON
-                    })
-                    .then(data => {
-                        createTbodyUsers(data);
-                    })
-                    .catch(error => {
-                        console.error('Erreur:', error);
-                    });
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                });
-            }
-            else if (isNaN(Number(searchValue))) {
-                // Envoi de la requête HTTP à AccountController
-                fetch('/account/getuserslikestring?searchString=' + encodeURIComponent(searchValue), {
-                    method: 'GET'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau');
-                    }
-                    return response.json(); // Convertir la réponse en JSON
-                })
-                .then(data => {
-                    if (data.length > 0) {
-                        createTbodyUsers(data);
-                    } else {
-                        createTbodyEmpty();
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                });
-            } else {
-                // Envoi de la requête HTTP à AccountController
-                fetch('/account/getuserbyid?id=' + encodeURIComponent(Number(searchValue)), {
-                    method: 'GET'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau');
-                    }
-                    return response.json(); // Convertir la réponse en JSON
-                })
-                .then(data => {
-                    if (data.length > 0) {
-                        createTbodyUsers(data);
-                    } else {
-                        createTbodyEmpty();
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                });
-            }
-        }, 500);
+    function fetchAndDisplayUsers() {
+        var searchValue = searchInput.value.toLowerCase();
+        var isAdmin = null;
+        if (searchSelect.value === "1") {
+            isAdmin = true;
+        } else if (searchSelect.value === "0") {
+            isAdmin = false;
+        }
+
+        var url;
+        if (searchValue.length === 0) {
+            url = '/account/getusersbyisadmin?isAdmin=' + encodeURIComponent(isAdmin);
+        } else if (!isNaN(Number(searchValue))) {
+            url = '/account/getuserbyid?id=' + encodeURIComponent(Number(searchValue)) + '&isAdmin=' + encodeURIComponent(isAdmin);
+        } else {
+            url = '/account/getuserslikestring?searchString=' + encodeURIComponent(searchValue) + '&isAdmin=' + encodeURIComponent(isAdmin);
+        }
+
+        fetch(url, { method: 'GET' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.length > 0) {
+                    createTbodyUsers(data);
+                } else {
+                    createTbodyEmpty();
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    }
+
+    searchSelect.addEventListener('change', fetchAndDisplayUsers);
+
+    searchInput.addEventListener('input', function () {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(fetchAndDisplayUsers, 500);
     });
 }
 

@@ -39,33 +39,83 @@ namespace NoixMagicroquanteWebsite.Controllers
                 return Json(true);
         }
 
-        public async Task<IActionResult> GetAllUsers(int id)
-        {
-            var users = await db.User.Where(u => u.UserId != 1 && u.UserId != id).ToListAsync();
-            return Json(users);
-        }
-
         public IActionResult GetCurrentUserId()
         {
             var UserId = HttpContext.Session.GetInt32("UserId");
             return Json(UserId);
         }
 
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetAllUsers(int id)
         {
-            var users = await db.User.Where(u => u.UserId == id).ToListAsync();
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var users = await db.User.Where(u => u.UserId != 1 && u.UserId != id && u.UserId != UserId).ToListAsync();
             return Json(users);
         }
 
-        public async Task<IActionResult> GetUsersLikeString(string searchString)
+        public async Task<IActionResult> GetUserById(int id, bool? isAdmin)
         {
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            if (isAdmin == null)
+            {
+                var users = await db.User.Where(u => u.UserId == id && u.UserId != 1 && u.UserId != UserId).ToListAsync();
+                return Json(users);
+            }
+            else
+            {
+                var users = await db.User.Where(u => u.UserId == id && u.UserId != 1 && u.UserId != UserId && u.IsAdmin == isAdmin).ToListAsync();
+                return Json(users);
+            }
+        }
+
+        public async Task<IActionResult> GetUsersLikeString(string searchString, bool? isAdmin)
+        {
+            int? UserId = HttpContext.Session.GetInt32("UserId");
+            if (!UserId.HasValue || UserId.Value == 0)
+            {
+                // Gérer l'absence d'un UserId valide, par exemple en renvoyant une réponse d'erreur ou vide
+                return Json(new List<User>()); // Exemple : retourne une liste vide
+            }
+
+            // Préparation de la requête de base
+            var query = db.User.AsQueryable();
+
+            // Filtre par isAdmin si spécifié
+            if (isAdmin.HasValue)
+            {
+                query = query.Where(u => u.IsAdmin == isAdmin.Value);
+            }
+
+            // Exclusion des utilisateurs spécifiques
+            query = query.Where(u => u.UserId != 1 && u.UserId != UserId);
+
+            // Filtre par searchString si spécifié
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                query = query.Where(u =>
+                    u.FirstName.ToLower().Contains(searchString) ||
+                    u.LastName.ToLower().Contains(searchString) ||
+                    u.UserName.ToLower().Contains(searchString) ||
+                    u.Email.ToLower().Contains(searchString));
+            }
+
+            // Exécution de la requête
+            var users = await query.ToListAsync();
+
+            // Retourner les utilisateurs sous forme de JSON
+            return Json(users);
+        }
+
+        public async Task<IActionResult> GetUsersByIsAdmin(bool? isAdmin)
+        {
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            if (isAdmin == null)
+            {
+                return await GetAllUsers(UserId);
+            }
+
             // Recherchez les utilisateurs dont l'un des champs de type chaîne correspond à la chaîne de recherche
-            var users = await db.User.Where(u =>
-                u.FirstName.Contains(searchString) || // Recherchez dans le prénom
-                u.LastName.Contains(searchString) ||  // Recherchez dans le nom
-                u.UserName.Contains(searchString) ||  // Recherchez dans le nom d'utilisateur
-                u.Email.Contains(searchString)        // Recherchez dans l'adresse e-mail
-            ).ToListAsync();
+            var users = await db.User.Where(u => u.IsAdmin == isAdmin && u.UserId != 1 && u.UserId != UserId).ToListAsync();
 
             // Vous pouvez ensuite retourner la liste des utilisateurs sous forme de JSON
             return Json(users);
