@@ -209,12 +209,44 @@ thead th:last-child {
 .container-search {
     display: flex;
     align-items: center;
-    width: 30rem;
+    width: 30%;
 }
 
-.input-search {
-    width: 70%;
-    display: none;
+#searchBar {
+    flex: 0;
+    overflow: hidden;
+    max-width: 0;
+    transition: max-width 0.5s ease-out;
+}
+
+#searchBar.active {
+    flex: 1;
+    max-width: 80%;
+    transition: max-width 0.5s ease-in;
+}
+
+.search-button {
+    width: auto;
+    position: relative;
+    transition: padding-left 0.3s ease; /* Animation pour le décalage du texte */
+}
+
+.search-button #chevron {
+    position: absolute;
+    left: 10px;
+    top: 29%;
+    opacity: 0;
+    transform: translateX(-20px); /* Position de départ hors du bouton */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover #chevron {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.search-button:hover {
+    padding-left: 1.75rem; /* Augmentation de l'espace pour décaler le texte */
 }
 
 @media (max-width: 2000px) {

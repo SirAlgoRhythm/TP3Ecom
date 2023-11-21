@@ -29,11 +29,12 @@ else
 {
     <div class="container-btns">
         <div class="container-search mt-3">
-            <div class="input-search">
+            <div id="searchBar">
                 <input type="text" class="form-control" placeholder="Rechercher un utilisateur" />
             </div>
-            <div class="ms-1">
-                <button type="button" class="btn btn-secondary">
+            <div class="ms-1 div-search-button">
+                <button type="button" class="btn btn-secondary search-button" onclick="toggleSearchBar()">
+                    <i id="chevron" class="fas fa-chevron-right"></i>
                     <i class="fa-solid fa-magnifying-glass"></i> Rechercher
                 </button>
             </div>
