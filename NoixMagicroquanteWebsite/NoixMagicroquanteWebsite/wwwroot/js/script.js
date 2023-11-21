@@ -454,7 +454,7 @@ function createTbodyUsers(users) {
         var tr = document.createElement('tr');
         tr.className = 'align-middle';
         tr.innerHTML = `
-            <td class="userId" scope="row">${user.userId}</td>
+            <th class="userId" scope="row">${user.userId}</th>
             <td class="firstName">${user.firstName}</td>
             <td class="lastName">${user.lastName}</td>
             <td class="userName">${user.userName}</td>
