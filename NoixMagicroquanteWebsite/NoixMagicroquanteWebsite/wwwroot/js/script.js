@@ -134,13 +134,13 @@ if (createUserForm) {
             method: 'POST',
             body: formData
         })
-            .then(data => {
-                $('#createUserModal').modal('hide');
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+        .then(data => {
+            $('#createUserModal').modal('hide');
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
     });
 
     $('#createUserModal').on('show.bs.modal', function (event) {
@@ -160,19 +160,20 @@ if (createUserForm) {
 var editBtn = document.querySelectorAll('.editBtn');
 editBtn.forEach(function (btn) {
     btn.addEventListener('click', function (event) {
-        var UserId = parseInt(btn.parentNode.parentNode.childNodes[1].innerText, 10);
-        var FirstName = btn.parentNode.parentNode.childNodes[3].innerText;
-        var LastName = btn.parentNode.parentNode.childNodes[5].innerText;
-        var UserName = btn.parentNode.parentNode.childNodes[7].innerText;
-        var Email = btn.parentNode.parentNode.childNodes[9].innerText;
-        var IsAdmin = btn.parentNode.parentNode.childNodes[11].innerText;
+        var tr = btn.closest('tr'); // Trouver la ligne du tableau
+        var UserId = tr.querySelector('.userId').textContent;
+        var FirstName = tr.querySelector('.firstName').textContent;
+        var LastName = tr.querySelector('.lastName').textContent;
+        var UserName = tr.querySelector('.userName').textContent;
+        var Email = tr.querySelector('.email').textContent;
+        var IsAdmin = tr.querySelector('.isAdmin').textContent;
 
         document.getElementById('editUserId').value = UserId;
         document.getElementById('editFirstName').value = FirstName;
         document.getElementById('editLastName').value = LastName;
         document.getElementById('editUserName').value = UserName;
         document.getElementById('editEmail').value = Email;
-        document.getElementById('editIsAdmin').value = IsAdmin === 'Oui' ? true : false;
+        document.getElementById('editIsAdmin').value = IsAdmin === 'Oui';
     });
 });
 
@@ -194,13 +195,13 @@ if (editUserForm) {
             method: 'POST',
             body: formData
         })
-            .then(data => {
-                $('#editUserModal').modal('hide');
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+        .then(data => {
+            $('#editUserModal').modal('hide');
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
     });
 
     $('#editUserModal').on('show.bs.modal', function (event) {
@@ -353,11 +354,131 @@ if (searchBar) {
         clearTimeout(debounceTimeout); // Annule le timeout précédent s'il existe
 
         debounceTimeout = setTimeout(function () {
-            // La fonction à exécuter après l'arrêt de la frappe
             var searchValue = searchInput.value.toLowerCase();
-            console.log('Valeur recherchée:', searchValue);
-
-            // Autres traitements...
+            if (searchValue.length === 0) {
+                // Envoi de la requête HTTP à AccountController
+                fetch('/account/getcurrentuserid', {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json(); // Convertir la réponse en JSON
+                })
+                .then(data => {
+                    // Envoi de la requête HTTP à AccountController
+                    fetch('/account/getallusers?userId=' + encodeURIComponent(data), {
+                        method: 'GET'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur réseau');
+                        }
+                        return response.json(); // Convertir la réponse en JSON
+                    })
+                    .then(data => {
+                        createTbodyUsers(data);
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            }
+            else if (isNaN(Number(searchValue))) {
+                // Envoi de la requête HTTP à AccountController
+                fetch('/account/getuserslikestring?searchString=' + encodeURIComponent(searchValue), {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json(); // Convertir la réponse en JSON
+                })
+                .then(data => {
+                    createTbodyUsers(data);
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            } else {
+                // Envoi de la requête HTTP à AccountController
+                fetch('/account/getuserbyid?id=' + encodeURIComponent(Number(searchValue)), {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json(); // Convertir la réponse en JSON
+                })
+                .then(data => {
+                    createTbodyUsers(data);
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            }
         }, 500);
+    });
+}
+
+function createTbodyUsers(users) {
+    var tbody = document.getElementById('tbodyUsers');
+    tbody.innerHTML = '';
+
+    users.forEach(user => {
+        var isAdmin = user.isAdmin ? "Oui" : "Non";
+        var tr = document.createElement('tr');
+        tr.className = 'align-middle';
+        tr.innerHTML = `
+            <td class="userId" scope="row">${user.userId}</td>
+            <td class="firstName">${user.firstName}</td>
+            <td class="lastName">${user.lastName}</td>
+            <td class="userName">${user.userName}</td>
+            <td class="email">${user.email}</td>
+            <td class="isAdmin">${isAdmin}</td>
+            <td>
+                <button type="button" class="btn btn-primary editBtn" data-user-id="${user.userId}" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger deleteBtn" data-user-id="${user.userId}" data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash"></i></button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    attachEditButtonEventListeners();
+    attachDeleteButtonEventListeners();
+}
+function attachEditButtonEventListeners() {
+    document.querySelectorAll('.editBtn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var tr = btn.closest('tr');
+            var UserId = tr.querySelector('.userId').textContent;
+            var FirstName = tr.querySelector('.firstName').textContent;
+            var LastName = tr.querySelector('.lastName').textContent;
+            var UserName = tr.querySelector('.userName').textContent;
+            var Email = tr.querySelector('.email').textContent;
+            var IsAdmin = tr.querySelector('.isAdmin').textContent;
+
+            document.getElementById('editUserId').value = UserId;
+            document.getElementById('editFirstName').value = FirstName;
+            document.getElementById('editLastName').value = LastName;
+            document.getElementById('editUserName').value = UserName;
+            document.getElementById('editEmail').value = Email;
+            document.getElementById('editIsAdmin').value = IsAdmin === 'Oui';
+        });
+    });
+}
+
+function attachDeleteButtonEventListeners() {
+    document.querySelectorAll('.deleteBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            var userId = this.getAttribute('data-user-id');
+            var deleteUrl = 'delete?UserId=' + userId;
+            document.getElementById('deleteUserLink').setAttribute('href', deleteUrl);
+        });
     });
 }

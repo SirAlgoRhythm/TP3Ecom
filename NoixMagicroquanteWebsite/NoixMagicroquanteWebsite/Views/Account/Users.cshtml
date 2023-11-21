@@ -60,24 +60,24 @@ else
                     <th scope="col" class="col-actions">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbodyUsers">
                 @foreach (var user in Model)
                 {
                     if (user.UserId != ViewBag.UserId)
                     {
                         <tr class="align-middle">
-                            <th scope="row">@user.UserId</th>
-                            <td>@user.FirstName</td>
-                            <td>@user.LastName</td>
-                            <td>@user.UserName</td>
-                            <td>@user.Email</td>
+                            <th class="userId" scope="row">@user.UserId</th>
+                            <td class="firstName">@user.FirstName</td>
+                            <td class="lastName">@user.LastName</td>
+                            <td class="userName">@user.UserName</td>
+                            <td class="email">@user.Email</td>
                             @if (user.IsAdmin == false)
                             {
-                                <td>Non</td>
+                                <td class="isAdmin">Non</td>
                             }
                             else
                             {
-                                <td>Oui</td>
+                                <td class="isAdmin">Oui</td>
                             }
                             <td>
                                 <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>

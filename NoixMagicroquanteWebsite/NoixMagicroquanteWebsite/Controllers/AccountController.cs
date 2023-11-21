@@ -39,6 +39,38 @@ namespace NoixMagicroquanteWebsite.Controllers
                 return Json(true);
         }
 
+        public async Task<IActionResult> GetAllUsers(int id)
+        {
+            var users = await db.User.Where(u => u.UserId != 1 && u.UserId != id).ToListAsync();
+            return Json(users);
+        }
+
+        public IActionResult GetCurrentUserId()
+        {
+            var UserId = HttpContext.Session.GetInt32("UserId");
+            return Json(UserId);
+        }
+
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var users = await db.User.Where(u => u.UserId == id).ToListAsync();
+            return Json(users);
+        }
+
+        public async Task<IActionResult> GetUsersLikeString(string searchString)
+        {
+            // Recherchez les utilisateurs dont l'un des champs de type chaîne correspond à la chaîne de recherche
+            var users = await db.User.Where(u =>
+                u.FirstName.Contains(searchString) || // Recherchez dans le prénom
+                u.LastName.Contains(searchString) ||  // Recherchez dans le nom
+                u.UserName.Contains(searchString) ||  // Recherchez dans le nom d'utilisateur
+                u.Email.Contains(searchString)        // Recherchez dans l'adresse e-mail
+            ).ToListAsync();
+
+            // Vous pouvez ensuite retourner la liste des utilisateurs sous forme de JSON
+            return Json(users);
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";
