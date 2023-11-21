@@ -215,8 +215,23 @@ thead th:last-child {
 #searchBar {
     flex: 0;
     overflow: hidden;
+    align-items: center;
     max-width: 0;
     transition: max-width 0.5s ease-out;
+}
+
+#searchDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#searchDiv .searchSelect {
+    width: 30%;
+}
+
+#searchDiv .searchInput {
+    width: 70%;
 }
 
 #searchBar.active {

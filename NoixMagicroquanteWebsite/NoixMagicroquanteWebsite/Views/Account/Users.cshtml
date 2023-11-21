@@ -30,7 +30,18 @@ else
     <div class="container-btns">
         <div class="container-search mt-3">
             <div id="searchBar">
-                <input type="text" class="form-control" placeholder="Rechercher un utilisateur" />
+                <div id="searchDiv">
+                    <div class="searchSelect">
+                        <select class="form-select">
+                            <option selected value="">Type d'utilisateur</option>
+                            <option value="0">Clients</option>
+                            <option value="1">Administrateurs</option>
+                        </select>
+                    </div>
+                    <div class="searchInput">
+                        <input type="text" class="form-control" placeholder="Rechercher un utilisateur" />
+                    </div>
+                </div>
             </div>
             <div class="ms-1 div-search-button">
                 <button type="button" class="btn btn-secondary search-button" onclick="toggleSearchBar()">
