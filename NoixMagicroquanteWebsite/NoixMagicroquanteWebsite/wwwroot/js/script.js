@@ -320,30 +320,27 @@ function toggleAccountEdit() {
 
 function toggleSearchBar() {
     var searchBar = document.getElementById('searchBar');
-    var searchInput = searchBar.querySelector('input');
     var chevron = document.getElementById('chevron');
 
+    function handleTransitionEnd(event) {
+        // Vérifier si la transition de max-width est terminée
+        if (event.propertyName === 'max-width' && !searchBar.classList.contains('active')) {
+            searchBar.removeEventListener('transitionend', handleTransitionEnd);
+            searchBar.querySelector('input').value = ''; // Réinitialiser l'input
+        }
+    }
+
     if (searchBar.classList.contains('active')) {
-        // Inverser la rotation du chevron
         chevron.style.transform = 'rotate(0deg)';
-
-        // Ajouter l'écouteur pour détecter la fin de la transition
-        searchBar.addEventListener('transitionend', function handler() {
-            searchBar.classList.remove('active');
-            searchBar.removeEventListener('transitionend', handler);
-
-            // Réinitialiser le contenu de la barre de recherche
-            searchInput.value = '';
-        });
-
-        // Déclencher l'animation de réduction
         searchBar.style.maxWidth = '0';
+        setTimeout(function () {
+            searchBar.classList.remove('active');
+            searchBar.querySelector('input').value = ''; // Réinitialiser l'input
+            window.location.reload();
+        }, 500);
     } else {
-        // Inverser la rotation du chevron
-        chevron.style.transform = 'rotate(180deg)';
-
-        // Ajouter la classe active pour déclencher l'animation d'expansion
         searchBar.classList.add('active');
+        chevron.style.transform = 'rotate(180deg)';
         searchBar.style.maxWidth = '80%';
     }
 }
