@@ -344,3 +344,20 @@ function toggleSearchBar() {
         searchBar.style.maxWidth = '80%';
     }
 }
+
+var searchBar = document.getElementById('searchBar');
+if (searchBar) {
+    var searchInput = searchBar.querySelector('input');
+    var debounceTimeout;
+    searchInput.addEventListener('input', function () {
+        clearTimeout(debounceTimeout); // Annule le timeout précédent s'il existe
+
+        debounceTimeout = setTimeout(function () {
+            // La fonction à exécuter après l'arrêt de la frappe
+            var searchValue = searchInput.value.toLowerCase();
+            console.log('Valeur recherchée:', searchValue);
+
+            // Autres traitements...
+        }, 500);
+    });
+}
