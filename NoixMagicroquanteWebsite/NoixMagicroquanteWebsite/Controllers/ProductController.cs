@@ -53,6 +53,7 @@ namespace NoixMagicroquanteWebsite.Controllers
                     {
                         BPBasketId = sessionBasket.BasketId,
                         BPProductId = model.ProductId,
+                        Product = db.Product.Find(model.ProductId),
                         Quantity = 1
                     };
 

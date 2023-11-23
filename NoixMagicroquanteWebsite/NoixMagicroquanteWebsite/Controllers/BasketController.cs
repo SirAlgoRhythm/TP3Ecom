@@ -33,12 +33,40 @@ namespace NoixMagicroquanteWebsite.Controllers
                 HttpContext.Session.SetInt32("BasketId", basket.BasketId);
 
                 var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
-                return View(ListProducts);
+                var ListBasketViewModel = new List<BasketViewModel>();
+                foreach (BasketProduct item in ListProducts)
+                {
+                    BasketViewModel nBVM = new BasketViewModel()
+                    {
+                        Id = item.BPProductId,
+                        Image = item.Product.Image,
+                        Name = item.Product.Name,
+                        Quantity = item.Quantity,
+                        Stock = item.Product.Stock,
+                        Price = item.Product.SellingPrice
+                    };
+                    ListBasketViewModel.Add(nBVM);
+                }
+                return View(ListBasketViewModel);
             }
             else
             {
                 var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
-                return View(ListProducts);
+                var ListBasketViewModel = new List<BasketViewModel>();
+                foreach (BasketProduct item in ListProducts)
+                {
+                    BasketViewModel nBVM = new BasketViewModel()
+                    {
+                        Id = item.BPProductId,
+                        Image = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Image,
+                        Name = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Name,
+                        Quantity = item.Quantity,
+                        Stock = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Stock,
+                        Price = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).SellingPrice
+                    };
+                    ListBasketViewModel.Add(nBVM);
+                }
+                return View(ListBasketViewModel);
             }
         }
     }

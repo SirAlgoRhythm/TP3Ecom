@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model ICollection<NoixMagicroquanteWebsite.Models.BasketProduct>
+@model ICollection<NoixMagicroquanteWebsite.Models.BasketViewModel>
 @{
     Layout = "_Layout";
     ViewBag.Title = ViewBag.Title;
@@ -13,3 +13,66 @@
         <h1>Votre panier est vide !</h1>
     </div>
 }
+
+
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row w-100">
+            <div class="col-lg-12 col-md-12 col-12">
+                <h3 class="display-5 mb-2 text-center">Mon Panier</h3>
+                <table id="shoppingCart" class="table table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                            <th style="width:60%">Produit</th>
+                            <th style="width:12%">Prix unitaire</th>
+                            <th style="width:10%">Quantité</th>
+                            <th style="width:16%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var basketProduct in Model)
+                        {
+                            <tr>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-md-3 text-left">
+                                            <img src=@Url.Content(basketProduct.Image) alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                        </div>
+                                        <div class="col-md-9 text-left mt-sm-2">
+                                            <h4>@basketProduct.Name</h4>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price">@basketProduct.Price</td>
+                                <td data-th="Quantity">
+                                    <input type="number" class="form-control form-control-lg text-center" min="1" max="@basketProduct.Stock" value="@basketProduct.Quantity">
+                                </td>
+                                <td class="actions" data-th="">
+                                    <div class="text-right">
+                                        <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="float-right text-right">
+                    <h4>Total:</h4>
+                    <h1>$99.00</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 d-flex align-items-center">
+            <div class="col-sm-6 order-md-2 text-right">
+                <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
+            </div>
+            <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                <a href="catalog.html">
+                    <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
