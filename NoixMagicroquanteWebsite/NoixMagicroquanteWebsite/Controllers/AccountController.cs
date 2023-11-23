@@ -21,6 +21,106 @@ namespace NoixMagicroquanteWebsite.Controllers
             return result == PasswordVerificationResult.Success;
         }
 
+        public async Task<IActionResult> CheckEmail(string email)
+        {
+            var user = await db.User.FirstOrDefaultAsync(u => u.Email == email);
+            bool isEmailTaken = user != null;
+            return Json(isEmailTaken);
+        }
+
+        public async Task<IActionResult> CheckEmailWithId(string email, int id)
+        {
+            var user = await db.User.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+                return Json(false);
+            else if (user.UserId == id)
+                return Json(false);
+            else
+                return Json(true);
+        }
+
+        public IActionResult GetCurrentUserId()
+        {
+            var UserId = HttpContext.Session.GetInt32("UserId");
+            return Json(UserId);
+        }
+
+        public async Task<IActionResult> GetAllUsers(int id)
+        {
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var users = await db.User.Where(u => u.UserId != 1 && u.UserId != id && u.UserId != UserId).ToListAsync();
+            return Json(users);
+        }
+
+        public async Task<IActionResult> GetUserById(int id, bool? isAdmin)
+        {
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            if (isAdmin == null)
+            {
+                var users = await db.User.Where(u => u.UserId == id && u.UserId != 1 && u.UserId != UserId).ToListAsync();
+                return Json(users);
+            }
+            else
+            {
+                var users = await db.User.Where(u => u.UserId == id && u.UserId != 1 && u.UserId != UserId && u.IsAdmin == isAdmin).ToListAsync();
+                return Json(users);
+            }
+        }
+
+        public async Task<IActionResult> GetUsersLikeString(string searchString, bool? isAdmin)
+        {
+            int? UserId = HttpContext.Session.GetInt32("UserId");
+            if (!UserId.HasValue || UserId.Value == 0)
+            {
+                // Gérer l'absence d'un UserId valide, par exemple en renvoyant une réponse d'erreur ou vide
+                return Json(new List<User>()); // Exemple : retourne une liste vide
+            }
+
+            // Préparation de la requête de base
+            var query = db.User.AsQueryable();
+
+            // Filtre par isAdmin si spécifié
+            if (isAdmin.HasValue)
+            {
+                query = query.Where(u => u.IsAdmin == isAdmin.Value);
+            }
+
+            // Exclusion des utilisateurs spécifiques
+            query = query.Where(u => u.UserId != 1 && u.UserId != UserId);
+
+            // Filtre par searchString si spécifié
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                query = query.Where(u =>
+                    u.FirstName.ToLower().Contains(searchString) ||
+                    u.LastName.ToLower().Contains(searchString) ||
+                    u.UserName.ToLower().Contains(searchString) ||
+                    u.Email.ToLower().Contains(searchString));
+            }
+
+            // Exécution de la requête
+            var users = await query.ToListAsync();
+
+            // Retourner les utilisateurs sous forme de JSON
+            return Json(users);
+        }
+
+        public async Task<IActionResult> GetUsersByIsAdmin(bool? isAdmin)
+        {
+            int UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            if (isAdmin == null)
+            {
+                return await GetAllUsers(UserId);
+            }
+
+            // Recherchez les utilisateurs dont l'un des champs de type chaîne correspond à la chaîne de recherche
+            var users = await db.User.Where(u => u.IsAdmin == isAdmin && u.UserId != 1 && u.UserId != UserId).ToListAsync();
+
+            // Vous pouvez ensuite retourner la liste des utilisateurs sous forme de JSON
+            return Json(users);
+        }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Noix MagiCroquantes - Compte";
@@ -37,67 +137,81 @@ namespace NoixMagicroquanteWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int UserId, string FirstName, string LastName, string UserName, string Email, string OldPassword, string Password, string ConfirmPassword)
+        public IActionResult EditUser(User user)
         {
             if (ModelState.IsValid)
             {
-                // Récupération de l'utilisateur dans la base de données
-                var userInDb = db.User.AsNoTracking().First(u => u.UserId == UserId);
-
-                if (!CheckPassword(userInDb, OldPassword))
+                try
                 {
-                    TempData["Error"] = "Erreur, vérifiez les informations que vous avez entré.";
-                    return RedirectToAction("Index", "Account");
-                }
+                    // Récupération de l'utilisateur dans la base de données
+                    var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
 
-                if (Password != ConfirmPassword)
+                    string hashedPassword = _userManager.HashPassword(userInDb, user.Password);
+                    userInDb.FirstName = user.FirstName;
+                    userInDb.LastName = user.LastName;
+                    userInDb.UserName = user.UserName;
+                    userInDb.Email = user.Email;
+                    userInDb.IsAdmin = user.IsAdmin;
+                    userInDb.Password = hashedPassword;
+
+                    db.Update(userInDb);
+                    db.SaveChanges();
+
+                    TempData["Message"] = "L'utilisateur à été modifié avec succès !";
+                    return Json(new { success = true, message = "L'utilisateur à été modifié avec succès !" });
+                }
+                catch (Exception ex)
                 {
-                    TempData["Error"] = "Erreur, le nouveau mot de passe et la confirmation ne correspondent pas.";
-                    return RedirectToAction("Index", "Account");
+                    TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                    return Json(new { success = false, message = ex.Message });
                 }
-
-                // Vérifiez que l'e-mail n'est pas déjà utilisé par un autre utilisateur.
-                var existingUserWithEmail = db.User.AsNoTracking().SingleOrDefault(u => u.Email == Email);
-                if (existingUserWithEmail != null && existingUserWithEmail.UserId != userInDb.UserId)
-                {
-                    TempData["Error"] = "Cette adresse e-mail est déjà utilisée par un autre compte.";
-                    return RedirectToAction("Index", "Account");
-                }
-
-                string hashedPassword = _userManager.HashPassword(userInDb, Password);
-
-                userInDb.FirstName = FirstName;
-                userInDb.LastName = LastName;
-                userInDb.UserName = UserName;
-                userInDb.Email = Email;
-                userInDb.Password = hashedPassword;
-
-                db.Update(userInDb);
-                db.SaveChanges();
-
-                TempData["Message"] = "Votre compte à été modifié avec succès !";
-                return RedirectToAction("Index", "Account");
             }
             else
             {
-                TempData["Error"] = "La modification de votre compte a échoué";
+                TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                return Json(new { success = false, message = "La modification de l'utilisateur a échoué." });
+            }
+        }
 
-                if (OldPassword.IsNullOrEmpty())
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAccount(User user, string NewPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                try
                 {
-                    return RedirectToAction("Index", "Account");
-                }
-                else if (ConfirmPassword.IsNullOrEmpty())
+                    // Récupération de l'utilisateur dans la base de données
+                    var userInDb = db.User.AsNoTracking().First(u => u.UserId == user.UserId);
+
+                    if (!CheckPassword(userInDb, user.Password))
+                    {
+                        return Json(new { success = false, message = "Vérifiez les informations." });
+                    }
+
+                    string hashedPassword = _userManager.HashPassword(userInDb, NewPassword);
+                    userInDb.FirstName = user.FirstName;
+                    userInDb.LastName = user.LastName;
+                    userInDb.UserName = user.UserName;
+                    userInDb.Email = user.Email;
+                    userInDb.Password = hashedPassword;
+
+                    db.Update(userInDb);
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Votre compte à été modifié avec succès !";
+                    return Json(new { success = true, message = "Votre compte a été modifié avec succès !" });
+                } 
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Index", "Account");
+                    TempData["Error"] = "La modification de l'utilisateur a échoué.";
+                    return Json(new { success = false, message = ex.Message });
                 }
-                else if (Password != ConfirmPassword)
-                {
-                    return RedirectToAction("Index", "Account");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Account");
-                }
+            }
+            else
+            {
+                TempData["Error"] = "La modification de votre compte a échoué.";
+                return Json(new { success = false, message = "La modification de votre compte a échoué." });
             }
         }
 
@@ -181,11 +295,14 @@ namespace NoixMagicroquanteWebsite.Controllers
                     db.User.Add(user);
                     db.SaveChanges();
 
-                    int IsAdmin = _userManager.IsAdmin(user);
+                    if (!HttpContext.Session.GetInt32("UserId").HasValue)
+                    {
+                        int IsAdmin = _userManager.IsAdmin(user);
 
-                    // Stockage de l'ID de l'utilisateur connecté dans la session
-                    HttpContext.Session.SetInt32("UserId", user.UserId);
-                    HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+                        // Stockage de l'ID de l'utilisateur connecté dans la session
+                        HttpContext.Session.SetInt32("UserId", user.UserId);
+                        HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
+                    }
 
                     TempData["Message"] = "Votre compte a été créé avec succès !";
                     return RedirectToAction("Index", "Home");
@@ -222,6 +339,26 @@ namespace NoixMagicroquanteWebsite.Controllers
             TempData["Message"] = "Déconnexion réussie, à bientôt !";
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Delete(int UserId)
+        {
+            // Récupération de l'utilisateur correspondant à l'id
+            var user = db.User.First(u => u.UserId == UserId);
+
+            // Supression du panier actif s'il y en a un
+            var basket = db.Basket.FirstOrDefault(b => b.UserId == user.UserId && b.Active == true);
+            if (basket != null)
+            {
+                db.Basket.Remove(basket);
+            }
+
+            // Supression de l'utilisateur
+            db.User.Remove(user);
+            db.SaveChanges();
+
+            TempData["Message"] = "L'utilisateur a été supprimé avec succès !";
+            return RedirectToAction("Users", "Account");
         }
     }
 }

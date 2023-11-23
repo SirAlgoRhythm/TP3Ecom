@@ -22,50 +22,57 @@
             <h4 class="text-color text-center mt-4">Compte de @Model.UserName</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Edit" method="post">
+            <form id="editAccountForm" method="post">
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="UserId" value="@Model.UserId" />
                 <div class="field-background user-info mb-3">
                     <div class="mb-1">
                         <label asp-for="FirstName"><b>Prénom :</b></label>
-                        <input type="text" asp-for="FirstName" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" placeholder="Entrez votre prénom" disabled="true" required />
+                        <input type="text" asp-for="FirstName" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" placeholder="Entrez votre prénom" disabled="true" />
+                        <span id="editFirstNameError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="field-background user-info mb-3">
                     <div class="mb-1">
                         <label asp-for="LastName"><b>Nom :</b></label>
-                        <input type="text" asp-for="LastName" id="LastName" name="LastName" class="form-control" value="@Model.LastName" placeholder="Entrez votre nom" disabled="true" required />
+                        <input type="text" asp-for="LastName" id="LastName" name="LastName" class="form-control" value="@Model.LastName" placeholder="Entrez votre nom" disabled="true" />
+                        <span id="editLastNameError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="field-background user-info mb-3">
                     <div class="mb-1">
                         <label asp-for="UserName"><b>Nom d'utilisateur :</b></label>
-                        <input type="text" asp-for="UserName" id="UserName" name="UserName" class="form-control" value="@Model.UserName" placeholder="Entrez votre nom d'utilisateur" disabled="true" required />
+                        <input type="text" asp-for="UserName" id="UserName" name="UserName" class="form-control" value="@Model.UserName" placeholder="Entrez votre nom d'utilisateur" disabled="true" />
+                        <span id="editUserNameError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="field-background user-info mb-3">
                     <div class="mb-1">
                         <label asp-for="Email"><b>Courriel :</b></label>
-                        <input type="email" asp-for="Email" id="Email" name="Email" class="form-control" value="@Model.Email" placeholder="Entrez votre courriel" disabled="true" required />
+                        <input type="email" asp-for="Email" id="Email" name="Email" class="form-control" value="@Model.Email" placeholder="Entrez votre courriel" disabled="true" />
+                        <span id="editEmailError" class="text-danger"></span>
                     </div>
                 </div>
                 <div id="hiddenFields">
                     <div class="field-background user-info mb-3">
                         <div class="mb-1">
-                            <label for="OldPassword"><b>Ancien mot de passe :</b></label>
-                            <input type="password" id="OldPassword" name="OldPassword" class="form-control" placeholder="Entrez votre ancien mot de passe" required />
+                            <label asp-for="Password"><b>Ancien mot de passe :</b></label>
+                            <input type="password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre ancien mot de passe" />
+                            <span id="editPasswordError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="field-background user-info mb-3">
                         <div class="mb-1">
-                            <label asp-for="Password"><b>Nouveau mot de passe :</b></label>
-                            <input type="password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre nouveau mot de passe" required />
+                            <label for="NewPassword"><b>Nouveau mot de passe :</b></label>
+                            <input type="password" id="NewPassword" name="NewPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" />
+                            <span id="editNewPasswordError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="field-background user-info mb-3">
                         <div class="mb-1">
                             <label for="ConfirmPassword"><b>Confirmation du nouveau mot de passe :</b></label>
-                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" required />
+                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                            <span id="editConfirmPasswordError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="text-center">
@@ -74,9 +81,12 @@
                     </div>
                 </div>
             </form>
-            <div class="text-center">
-                <button class="btn btn-primary" id="btnEdit" onclick="toggleAccountEdit()"><i class="fa-solid fa-pen-to-square"></i> Éditer</button>
-            </div>
+            @if (ViewBag.UserId != 1)
+            {
+                <div class="text-center">
+                    <button class="btn btn-primary" id="btnEdit" onclick="toggleAccountEdit()"><i class="fa-solid fa-pen-to-square"></i> Éditer</button>
+                </div>
+            }
         </div>
     </div>
 </div>

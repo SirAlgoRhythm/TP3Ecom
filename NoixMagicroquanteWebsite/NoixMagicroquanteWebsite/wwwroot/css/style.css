@@ -65,6 +65,34 @@ thead th:last-child {
     border-top-right-radius: 0.5rem;
 }
 
+.col-id {
+    width: 5%; /* ou une autre valeur fixe comme 50px si vous préférez */
+}
+
+.col-first-name {
+    width: 15%;
+}
+
+.col-last-name {
+    width: 15%;
+}
+
+.col-username {
+    width: 20%;
+}
+
+.col-email {
+    width: 25%;
+}
+
+.col-is-admin {
+    width: 10%;
+}
+
+.col-actions {
+    width: 10%;
+}
+
 .text-color {
     color: #B8975A !important;
 }
@@ -100,11 +128,11 @@ thead th:last-child {
     transition: max-height 0.5s ease-out; /* Animation sur 0.5 secondes */
 }
 
-    /* Style lorsque la section est visible */
-    #hiddenFields.active {
-        max-height: 500px;
-        transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
-    }
+/* Style lorsque la section est visible */
+#hiddenFields.active {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in; /* Animation sur 0.5 secondes */
+}
 
 .center {
     display: flex;
@@ -138,6 +166,102 @@ thead th:last-child {
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+}
+
+.field-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 0.5rem;
+    border: solid #FAF0E6;
+    width: 95%;
+    margin: auto;
+}
+
+.field-modal p {
+    margin: auto; /* Centre le contenu de chaque élément <p> */
+    text-align: center; /* Centre le texte horizontalement */
+    font-size: 1.15rem;
+}
+
+.modal-header, .modal-footer {
+    border: none; /* Supprime les bordures du header et du footer */
+}
+
+.modal-body {
+    border-top: none; /* Supprime la bordure supérieure du body */
+    border-bottom: none; /* Supprime la bordure inférieure du body */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-dialog {
+    max-width: 600px;
+}
+
+.container-btns {
+    display: flex;
+    align-items: center;
+}
+
+.container-search {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+
+#searchBar {
+    flex: 0;
+    overflow: hidden;
+    align-items: center;
+    max-width: 0;
+    transition: max-width 0.5s ease-out;
+}
+
+#searchDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#searchDiv .searchSelect {
+    width: 30%;
+}
+
+#searchDiv .searchInput {
+    width: 70%;
+}
+
+#searchBar.active {
+    flex: 1;
+    max-width: 80%;
+    transition: max-width 0.5s ease-in;
+}
+
+.search-button {
+    width: auto;
+    position: relative;
+    transition: padding-left 0.3s ease; /* Animation pour le décalage du texte */
+}
+
+.search-button #chevron {
+    position: absolute;
+    left: 10px;
+    top: 29%;
+    opacity: 0;
+    transform: translateX(-20px); /* Position de départ hors du bouton */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover #chevron {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.search-button:hover {
+    padding-left: 1.75rem; /* Augmentation de l'espace pour décaler le texte */
 }
 
 @media (max-width: 2000px) {
