@@ -21,6 +21,7 @@ namespace NoixMagicroquanteWebsite.Controllers
 
             ViewBag.UserId = UserId;
             ViewBag.IsAdmin = IsAdmin;
+            ViewBag.BasketId = BasketId;
         }
     }
 }
