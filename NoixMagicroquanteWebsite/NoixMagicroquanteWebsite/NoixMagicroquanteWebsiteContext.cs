@@ -121,15 +121,7 @@ namespace NoixMagicroquanteWebsite
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<BasketProduct>()
-                .HasKey( bp => new { bp.BPProductId, bp.BPBasketId });
-            modelBuilder.Entity<BasketProduct>()
-                .HasOne(bp => bp.Basket)
-                .WithMany(p => p.BasketProduct)
-                .HasForeignKey(bp => bp.BPBasketId);
-            modelBuilder.Entity<BasketProduct>()
-                .HasOne(bp => bp.Basket)
-                .WithMany(p => p.BasketProduct)
-                .HasForeignKey(bp => bp.BPProductId);
+                .HasKey( bp => new { bp.Id });
         }
     }
 }

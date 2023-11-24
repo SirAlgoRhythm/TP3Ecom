@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoixMagicroquanteWebsite;
 
@@ -11,9 +12,11 @@ using NoixMagicroquanteWebsite;
 namespace NoixMagicroquanteWebsite.Migrations
 {
     [DbContext(typeof(NoixMagicroquanteWebsiteContext))]
-    partial class NoixMagicroquanteWebsiteContextModelSnapshot : ModelSnapshot
+    [Migration("20231124015106_BPBasketIdnonPK")]
+    partial class BPBasketIdnonPK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,10 @@ namespace NoixMagicroquanteWebsite.Migrations
 
             modelBuilder.Entity("NoixMagicroquanteWebsite.Models.BasketProduct", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BPBasketId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BPProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BasketId")
+                    b.Property<int>("BPBasketId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -72,9 +66,7 @@ namespace NoixMagicroquanteWebsite.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("BasketId");
+                    b.HasKey("BPProductId");
 
                     b.HasIndex("ProductId");
 
@@ -866,7 +858,9 @@ namespace NoixMagicroquanteWebsite.Migrations
                 {
                     b.HasOne("NoixMagicroquanteWebsite.Models.Basket", "Basket")
                         .WithMany("BasketProduct")
-                        .HasForeignKey("BasketId");
+                        .HasForeignKey("BPProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NoixMagicroquanteWebsite.Models.Product", "Product")
                         .WithMany("BasketProduct")

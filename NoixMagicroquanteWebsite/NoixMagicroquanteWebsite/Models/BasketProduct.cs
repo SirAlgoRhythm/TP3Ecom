@@ -2,6 +2,7 @@
 {
     public class BasketProduct
     {
+        public int Id { get; set; }
         public int BPProductId { get; set; }
         public Product? Product { get; set; }
         public int BPBasketId { get; set; }
