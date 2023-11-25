@@ -6,6 +6,11 @@
     ViewBag.Title = ViewBag.Title;
 }
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Message"]</div>
+}
+
 <div class="container text-center mt-5">
     <img class="rounded-circle custom-border mx-auto" style="width: 50%; height: auto;" src="~/images/Logo.png" alt="Logo.png">
     <div class="container mt-3">

@@ -78,11 +78,23 @@ namespace NoixMagicroquanteWebsite.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CheckoutBasket(List<BasketViewModel> products)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var basket = db.Basket.First(b => b.BasketId == (int)HttpContext.Session.GetInt32("BasketId"));
+                basket.Active = false;
+                basket.SellDate = DateTime.Now;
+                db.SaveChanges();
+
+                HttpContext.Session.Remove("BasketId");
+
+                TempData["Message"] = "Paiment accepté, merci de votre achat !";
+                return RedirectToAction("Index", "Home");
+            }
+            else 
+            {
+                TempData["Message"] = "Erreur, votre commande a échoué.";
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
         }
     }
 }

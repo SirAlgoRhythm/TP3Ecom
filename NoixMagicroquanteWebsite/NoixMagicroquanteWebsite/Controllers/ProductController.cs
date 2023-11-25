@@ -23,6 +23,12 @@ namespace NoixMagicroquanteWebsite.Controllers
             //Todo: vérifier la quantité disponible
             if (!ModelState.IsValid) 
             {
+                if (!HttpContext.Session.GetInt32("UserId").HasValue)
+                {
+                    TempData["Message"] = "Vous devez être connecté pour ajouter un produit à votre panier.";
+                    return RedirectToAction("Login", "Account");
+                }
+
                 var basketId = HttpContext.Session.GetInt32("BasketId");
                 if (basketId == null)
                 {
