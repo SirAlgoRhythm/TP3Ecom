@@ -83,6 +83,7 @@ namespace NoixMagicroquanteWebsite.Controllers
                 var basket = db.Basket.First(b => b.BasketId == (int)HttpContext.Session.GetInt32("BasketId"));
                 basket.Active = false;
                 basket.SellDate = DateTime.Now;
+                db.Basket.Update(basket);
                 db.SaveChanges();
 
                 HttpContext.Session.Remove("BasketId");

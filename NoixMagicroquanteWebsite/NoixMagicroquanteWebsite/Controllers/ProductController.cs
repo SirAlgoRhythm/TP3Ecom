@@ -29,13 +29,14 @@ namespace NoixMagicroquanteWebsite.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
+                var product = db.Product.Find(model.ProductId);
                 var basketId = HttpContext.Session.GetInt32("BasketId");
                 if (basketId == null)
                 {
                     Basket newBasket = new Basket()
                     {
                         UserId = (int)HttpContext.Session.GetInt32("UserId"),
-                        TotalPrice = 0,
+                        TotalPrice = product.SellingPrice,
                         Active = true,
                         SellDate = null,
                         BasketProduct = new List<BasketProduct>()
@@ -44,6 +45,13 @@ namespace NoixMagicroquanteWebsite.Controllers
                     db.SaveChanges();
 
                     HttpContext.Session.SetInt32("BasketId", newBasket.BasketId);
+                }
+                else
+                {
+                    var basket = db.Basket.Find(basketId);
+                    basket.TotalPrice += product.SellingPrice;
+                    db.Update(basket);
+                    db.SaveChanges();
                 }
                 Basket sessionBasket = db.Basket.FirstOrDefault(b => b.BasketId == (int)HttpContext.Session.GetInt32("BasketId"));
                 if (sessionBasket == null) 
