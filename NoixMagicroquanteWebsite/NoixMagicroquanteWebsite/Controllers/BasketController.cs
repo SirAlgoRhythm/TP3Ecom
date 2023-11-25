@@ -33,41 +33,56 @@ namespace NoixMagicroquanteWebsite.Controllers
                 HttpContext.Session.SetInt32("BasketId", basket.BasketId);
 
                 var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
-                var ListBasketViewModel = new List<BasketViewModel>();
+                BasketViewModel bvm = new BasketViewModel();
+                bvm.checkoutPostModels = new List<CheckoutPostModel>();
                 foreach (BasketProduct item in ListProducts)
                 {
-                    BasketViewModel nBVM = new BasketViewModel()
-                    {
-                        Id = item.BPProductId,
-                        Image = item.Product.Image,
-                        Name = item.Product.Name,
-                        Quantity = item.Quantity,
-                        Stock = item.Product.Stock,
-                        Price = item.Product.SellingPrice
-                    };
-                    ListBasketViewModel.Add(nBVM);
-                }
-                return View(ListBasketViewModel);
-            }
-            else
-            {
-                var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
-                var ListBasketViewModel = new List<BasketViewModel>();
-                foreach (BasketProduct item in ListProducts)
-                {
-                    BasketViewModel nBVM = new BasketViewModel()
-                    {
-                        Id = item.BPProductId,
-                        Image = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Image,
+                    CheckoutPostModel cpm = new CheckoutPostModel()
+                    { 
+                        ProductId = item.BPProductId,
                         Name = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Name,
+                        Image = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Image,
                         Quantity = item.Quantity,
                         Stock = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Stock,
                         Price = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).SellingPrice
                     };
-                    ListBasketViewModel.Add(nBVM);
+                    bvm.checkoutPostModels.Add(cpm);
                 }
-                return View(ListBasketViewModel);
+                bvm.TotalPrice = basket.TotalPrice;
+                return View(bvm);
             }
+            else
+            {
+                var ListProducts = db.BasketProduct.Where(b => b.BPBasketId == basket.BasketId).ToList();
+                BasketViewModel bvm = new BasketViewModel();
+                bvm.checkoutPostModels = new List<CheckoutPostModel>();
+                foreach (BasketProduct item in ListProducts)
+                {
+                    CheckoutPostModel cpm = new CheckoutPostModel()
+                    {
+                        ProductId = item.BPProductId,
+                        Name = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Name,
+                        Image = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Image,
+                        Quantity = item.Quantity,
+                        Stock = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).Stock,
+                        Price = db.Product.FirstOrDefault(p => p.ProductId == item.BPProductId).SellingPrice
+                    };
+                    bvm.checkoutPostModels.Add(cpm);
+                }
+                bvm.TotalPrice = basket.TotalPrice;
+                return View(bvm);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CheckoutBasket(List<BasketViewModel> products)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
     }
 }
