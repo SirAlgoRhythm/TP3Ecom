@@ -8,6 +8,11 @@
     ViewBag.Title = ViewBag.Title;
 }
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Message"]</div>
+}
+
 <div class="container-fluid pTitle">
     @if (Model.Count() == 0)
     {

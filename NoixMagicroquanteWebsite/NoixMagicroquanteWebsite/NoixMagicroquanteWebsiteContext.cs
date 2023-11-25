@@ -121,7 +121,7 @@ namespace NoixMagicroquanteWebsite
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<BasketProduct>()
-                .HasKey( bp => new { bp.Id });
+                .HasKey(bp => new { bp.BPProductId, bp.BPBasketId }); // Clé primaire composite
         }
     }
 }
