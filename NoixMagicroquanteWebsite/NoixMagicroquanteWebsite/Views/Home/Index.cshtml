@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Message"]</div>
+}
+
+<div class="container text-center mt-5">
+    <img class="rounded-circle custom-border mx-auto" style="width: 50%; height: auto;" src="~/images/Logo.png" alt="Logo.png">
+    <div class="container mt-3">
+        <h2>Votre entreprise de confiance depuis la noix des temps</h2>
+    </div>
+</div>
+
+<div class="astrodivider">
+    <div class="astrodividermask">
+
+    </div><span><i>&#10038;</i></span>
+</div>
+
+<div class="container mt-5">
+    
+    <ul class="cards">
+        <li>
+            <a href="" class="card">
+                <img src="~/images/squirrel1.png" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+                        <img class="card__thumb" src="~/images/noixthan.jpg" alt="" />
+                        <div class="card__header-text">
+                            <h3 class="card__title">Noixthan</h3>
+                            <span class="card__status">Fondateur</span>
+                        </div>
+                    </div>
+                    <p class="card__description">NoixMagiCroquante est sa plus grande réalisation. Si les produits sont d'une aussi grande qualité, c'est aussi grâce à lui.</p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="" class="card">
+                <img src="~/images/squirrel2.png" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+                        <img class="card__thumb" src="~/images/amandine.jpg" alt="" />
+                        <div class="card__header-text">
+                            <h3 class="card__title">Amandine</h3>
+                            <span class="card__status">Fondatrice</span>
+                        </div>
+                    </div>
+                    <p class="card__description">Avec son cofondateur Noixthan, ils sont fiers d'avoir établit le standard en terme de vente dans le monde entier.</p>
+                </div>
+            </a>
+        </li>
+        
+    </ul>
+
+</div>

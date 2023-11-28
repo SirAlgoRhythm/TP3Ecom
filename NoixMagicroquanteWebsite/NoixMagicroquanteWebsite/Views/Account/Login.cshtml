@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model NoixMagicroquanteWebsite.Models.LoginViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["Error"]</div>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning text-center">@TempData["Message"]</div>
+}
+
+<div class="center">
+    <div class="card-background card shadow" style="width:40rem;">
+        <div class="card-body">
+            <form asp-action="Login">
+                @Html.AntiForgeryToken()
+                <h4 class="text-color card-title text-center">Connexion</h4>
+                <div class="field-background user-info form-group">
+                    <label asp-for="Email"><b>Courriel :</b></label>
+                    <input type="email" id="Email" asp-for="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="field-background user-info form-group">
+                    <label asp-for="Password"><b>Mot de passe :</b></label>
+                    <div class="input-group">
+                        <input type="password" id="Password" asp-for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                        <div class="input-group-append">
+                            <span class="input-group-text" onclick="togglePasswordVisibility()" style="height:100%">
+                                <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Connexion" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="mt-2">
+                <p class="text-color text-center mb-0">Pas encore de compte client ? <a href="~/account/signup">Créer un compte.</a></p>
+            </div>
+        </div>
+    </div>
+</div>

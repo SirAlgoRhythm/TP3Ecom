@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model NoixMagicroquanteWebsite.Models.BasketViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+    int i = 0;
+}
+
+@if (Model.checkoutPostModels.Count() == 0)
+{
+    <div class="center">
+        <h1>Votre panier est vide !</h1>
+    </div>
+}
+else
+{
+    <form id="Checkoutform" asp-action="CheckoutBasket" asp-controller="Basket" method="post">
+        @Html.AntiForgeryToken()
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <h3 class="display-5 mb-2 text-center">Mon Panier</h3>
+                        <table id="shoppingCart" class="table table-condensed table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="width:60%">Produit</th>
+                                    <th style="width:12%">Prix unitaire</th>
+                                    <th style="width:10%">Quantité</th>
+                                    <th style="width:16%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.checkoutPostModels)
+                                {
+                                    <input type="hidden" name="CheckoutPostModels[@i].ProductId" asp-for="@Model.checkoutPostModels[i].ProductId" value="@Model.checkoutPostModels[i].ProductId">
+                                    <tr>
+                                        <td data-th="Product">
+                                            <div class="row">
+                                                <div class="col-md-3 text-left">
+                                                    <img src=@Url.Content(item.Image) alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                                </div>
+                                                <div class="col-md-9 text-left mt-sm-2">
+                                                    <h4>@item.Name</h4>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-th="Price">@item.Price $</td>
+                                        <input type="hidden" name="CheckoutPostModels[@i].Price" asp-for="@Model.checkoutPostModels[i].Price" value="@Model.checkoutPostModels[i].Price">
+                                        <td data-th="Quantity">
+                                            <input type="number" name="CheckoutPostModels[@i].Quantity" asp-for="@Model.checkoutPostModels[i].Quantity" class="form-control form-control-lg text-center" min="1" max="@item.Stock" value="@Model.checkoutPostModels[i].Quantity" onkeydown="return false">
+                                        </td>
+                                        <td class="actions" data-th="">
+                                            <div class="text-right">
+                                                <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="float-right text-right">
+                            <h4>Total:</h4>
+                            <h1>@Model.TotalPrice $</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 d-flex align-items-center">
+                    <div class="col-sm-6 order-md-2 text-right">
+                        <button type="submit" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</button>
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                        <a href="catalog.html">
+                            <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fonction pour mettre à jour le total lorsque la quantité change
+        function updateTotal() {
+            var totalPrice = 0;
+
+            // Parcourir toutes les lignes du panier
+            var rows = document.querySelectorAll('#shoppingCart tbody tr');
+            rows.forEach(function (row) {
+                var price = parseFloat(row.querySelector('[data-th="Price"]').textContent);
+                var quantityInput = row.querySelector('[data-th="Quantity"] input');
+
+                var quantity = parseInt(quantityInput.value);
+
+                // Ajouter le prix du produit actuel au prix total
+                totalPrice += price * quantity;
+            });
+
+            // Mettre à jour l'affichage du total
+            document.querySelector('.float-right.text-right h1').textContent = '$' + totalPrice.toFixed(2);
+        }
+
+        // Fonction pour supprimer une ligne du panier
+        function removeProduct(row) {
+            row.remove();
+            updateTotal();
+        }
+
+        // Appeler la fonction au chargement de la page
+        updateTotal();
+
+        // Lorsque la quantité change, appeler la fonction pour mettre à jour le total
+        var quantityInputs = document.querySelectorAll('#shoppingCart tbody tr [data-th="Quantity"] input');
+        quantityInputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                updateTotal();
+            });
+        });
+
+        // Lorsque le bouton de poubelle est cliqué, appeler la fonction pour supprimer la ligne du panier
+        var trashButtons = document.querySelectorAll('#shoppingCart tbody tr .actions button');
+        trashButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var row = this.closest('tr');
+                removeProduct(row);
+            });
+        });
+    });
+</script>

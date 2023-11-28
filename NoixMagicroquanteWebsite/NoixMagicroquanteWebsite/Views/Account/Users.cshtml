@@ -1,0 +1,240 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ICollection<NoixMagicroquanteWebsite.Models.User>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = ViewBag.Title;
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Message"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["Error"]</div>
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="center">
+        <h1>Il n'y a pas encore d'utilisateurs !</h1>
+        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
+        </button>
+    </div>
+}
+else
+{
+    <div class="container-btns">
+        <div class="container-search mt-3">
+            <div id="searchBar">
+                <div id="searchDiv">
+                    <div class="searchSelect">
+                        <select class="form-select">
+                            <option selected value="">Type d'utilisateur</option>
+                            <option value="0">Clients</option>
+                            <option value="1">Administrateurs</option>
+                        </select>
+                    </div>
+                    <div class="searchInput">
+                        <input type="text" class="form-control" placeholder="Rechercher un utilisateur" />
+                    </div>
+                </div>
+            </div>
+            <div class="ms-1 div-search-button">
+                <button type="button" class="btn btn-secondary search-button" onclick="toggleSearchBar()">
+                    <i id="chevron" class="fas fa-chevron-right"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i> Rechercher
+                </button>
+            </div>
+        </div>
+
+        <div class="ms-auto mt-3">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                <i class="fa-solid fa-circle-plus"></i> Créer un utilisateur
+            </button>
+        </div>
+    </div>
+
+    <div class="center-top">
+        <table class="shadow text-center">
+            <thead class="table-head-background">
+                <tr class="align-middle text-color">
+                    <th scope="col" class="col-id">Id</th>
+                    <th scope="col" class="col-first-name">Prénom</th>
+                    <th scope="col" class="col-last-name">Nom</th>
+                    <th scope="col" class="col-username">Nom d'utilisateur</th>
+                    <th scope="col" class="col-email">Courriel</th>
+                    <th scope="col" class="col-is-admin">Administrateur</th>
+                    <th scope="col" class="col-actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyUsers">
+                @foreach (var user in Model)
+                {
+                    if (user.UserId != ViewBag.UserId)
+                    {
+                        <tr class="align-middle">
+                            <th class="userId" scope="row">@user.UserId</th>
+                            <td class="firstName">@user.FirstName</td>
+                            <td class="lastName">@user.LastName</td>
+                            <td class="userName">@user.UserName</td>
+                            <td class="email">@user.Email</td>
+                            @if (user.IsAdmin == false)
+                            {
+                                <td class="isAdmin">Non</td>
+                            }
+                            else
+                            {
+                                <td class="isAdmin">Oui</td>
+                            }
+                            <td>
+                                <button type="button" class="btn btn-primary editBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger deleteBtn" data-user-id="@user.UserId" data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- Modal de création -->
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="createUserModalLabel">Créer un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="createUserForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="field-background user-info form-group">
+                        <label for="FirstName"><b>Prénom :</b></label>
+                        <input type="text" id="FirstName" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez votre prénom" />
+                        <span id="FirstNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="LastName"><b>Nom :</b></label>
+                        <input type="text" id="LastName" name="LastName" class="form-control" placeholder="Entrez votre nom" />
+                        <span id="LastNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="UserName"><b>Nom d'utilisateur :</b></label>
+                        <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Entrez votre nom d'utilisateur" />
+                        <span id="UserNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Email"><b>Courriel :</b></label>
+                        <input type="email" id="Email" name="Email" class="form-control" placeholder="Entrez votre courriel" />
+                        <span id="EmailError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="IsAdmin"><b>Administrateur :</b></label>
+                        <select id="IsAdmin" name="IsAdmin" class="form-select">
+                            <option value="false">Non</option>
+                            <option value="true">Oui</option>
+                        </select>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="Password"><b>Mot de passe :</b></label>
+                        <input type="password" id="Password" for="Password" name="Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                        <span id="PasswordError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="ConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer votre mot de passe" />
+                        <span id="ConfirmPasswordError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de modification -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="editUserModalLabel">Modifier un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editUserForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="field-background user-info form-group">
+                        <input type="hidden" id="editUserId" for="UserId" name="UserId" class="form-control" />
+                        <label for="editFirstName"><b>Prénom :</b></label>
+                        <input type="text" id="editFirstName" for="FirstName" name="FirstName" class="form-control" placeholder="Entrez un prénom" />
+                        <span id="editFirstNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editLastName"><b>Nom :</b></label>
+                        <input type="text" id="editLastName" name="LastName" class="form-control" placeholder="Entrez un nom" />
+                        <span id="editLastNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editUserName"><b>Nom d'utilisateur :</b></label>
+                        <input type="text" id="editUserName" name="UserName" class="form-control" placeholder="Entrez un nom d'utilisateur" />
+                        <span id="editUserNameError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editEmail"><b>Courriel :</b></label>
+                        <input type="email" id="editEmail" name="Email" class="form-control" placeholder="Entrez un courriel" />
+                        <span id="editEmailError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editIsAdmin"><b>Administrateur :</b></label>
+                        <select id="editIsAdmin" name="IsAdmin" class="form-select">
+                            <option value="false">Non</option>
+                            <option value="true">Oui</option>
+                        </select>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editPassword"><b>Mot de passe :</b></label>
+                        <input type="password" id="editPassword" for="Password" name="Password" class="form-control" placeholder="Entrez le nouveau mot de passe" />
+                        <span id="editPasswordError" class="text-danger"></span>
+                    </div>
+                    <div class="field-background user-info form-group">
+                        <label for="editConfirmPassword"><b>Confirmation du mot de passe :</b></label>
+                        <input type="password" id="editConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmer le mot de passe" />
+                        <span id="editConfirmPasswordError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success">Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de suppression -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-background">
+            <div class="modal-header">
+                <h5 class="modal-title text-color" id="deleteUserModalLabel">Suppression d'un utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body field-background field-modal">
+                <p>Êtes-vous certain de vouloir supprimer cet utilisateur ?</p>
+                <p>Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <a class="btn btn-danger" id="deleteUserLink" href="#">Supprimer</a>
+            </div>
+        </div>
+    </div>
+</div>
