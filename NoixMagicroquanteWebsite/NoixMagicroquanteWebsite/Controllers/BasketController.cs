@@ -76,14 +76,23 @@ namespace NoixMagicroquanteWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CheckoutBasket(List<BasketViewModel> products)
+        public IActionResult CheckoutBasket(BasketViewModel bvm)
         {
             if (ModelState.IsValid)
             {
                 var basket = db.Basket.First(b => b.BasketId == (int)HttpContext.Session.GetInt32("BasketId"));
                 basket.Active = false;
                 basket.SellDate = DateTime.Now;
+                basket.TotalPrice = PriceCount(bvm);
                 db.Basket.Update(basket);
+                db.SaveChanges();
+
+                foreach (var item in bvm.checkoutPostModels)
+                {
+                    Product product = db.Product.FirstOrDefault(p => p.ProductId == item.ProductId);
+                    product.Stock -= item.Quantity;
+                    db.Product.Update(product);
+                }
                 db.SaveChanges();
 
                 HttpContext.Session.Remove("BasketId");
@@ -96,6 +105,16 @@ namespace NoixMagicroquanteWebsite.Controllers
                 TempData["Message"] = "Erreur, votre commande a échoué.";
                 return RedirectToAction("Index");
             }
+        }
+
+        private double PriceCount(BasketViewModel bvm)
+        {
+            double totalPrice = 0;
+            foreach (var item in bvm.checkoutPostModels)
+            {
+                totalPrice += item.Price * item.Quantity;
+            }
+            return totalPrice;
         }
     }
 }

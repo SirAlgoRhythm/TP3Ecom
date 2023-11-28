@@ -5,6 +5,7 @@
 @{
     Layout = "_Layout";
     ViewBag.Title = ViewBag.Title;
+    int i = 0;
 }
 
 @if (Model.checkoutPostModels.Count() == 0)
@@ -34,7 +35,7 @@ else
                             <tbody>
                                 @foreach (var item in Model.checkoutPostModels)
                                 {
-                                    <input type="hidden" asp-for="@item.ProductId">
+                                    <input type="hidden" name="CheckoutPostModels[@i].ProductId" asp-for="@Model.checkoutPostModels[i].ProductId" value="@Model.checkoutPostModels[i].ProductId">
                                     <tr>
                                         <td data-th="Product">
                                             <div class="row">
@@ -47,9 +48,9 @@ else
                                             </div>
                                         </td>
                                         <td data-th="Price">@item.Price $</td>
-                                        <input type="hidden" asp-for="@item.Price">
+                                        <input type="hidden" name="CheckoutPostModels[@i].Price" asp-for="@Model.checkoutPostModels[i].Price" value="@Model.checkoutPostModels[i].Price">
                                         <td data-th="Quantity">
-                                            <input type="number" asp-for="@item.Quantity" class="form-control form-control-lg text-center" min="1" max="@item.Stock" value="@item.Quantity" onkeydown="return false">
+                                            <input type="number" name="CheckoutPostModels[@i].Quantity" asp-for="@Model.checkoutPostModels[i].Quantity" class="form-control form-control-lg text-center" min="1" max="@item.Stock" value="@Model.checkoutPostModels[i].Quantity" onkeydown="return false">
                                         </td>
                                         <td class="actions" data-th="">
                                             <div class="text-right">
@@ -59,6 +60,7 @@ else
                                             </div>
                                         </td>
                                     </tr>
+                                    i++;
                                 }
                             </tbody>
                         </table>
